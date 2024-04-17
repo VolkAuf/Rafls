@@ -1,0 +1,59 @@
+.page {
+  height: 70dvh;
+  background: #342626;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.backHome {
+  text-decoration: none;
+  color: #FFFFFF;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.input {
+  background: #313131E5;
+  padding: 15px 20px;
+  border-radius: 8px;
+
+  input {
+    color: white;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+
+    &::placeholder {
+      color: #757575;
+    }
+  }
+}
+
+.btn {
+  background: #E13C52;
+  outline: none;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:visited {
+    color: rgb(237, 108, 2);
+  }
+}

@@ -1,0 +1,66 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  padding: 70px;
+  background: #121212;
+  color: #FFFFFF;
+}
+
+.wrapper {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  &__header {
+    font-size: 24px;
+    line-height: 33px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  &__list {
+    list-style: none;
+  }
+
+  &__listItem {
+    font-size: 18px;
+    line-height: 25px;
+    font-weight: 400;
+    color: #797979;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.links {
+  display: flex;
+  gap: 20px;
+
+  a {
+    text-decoration: none;
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 500;
+    color: #616161;
+
+    &:visited {
+      color: #616161;
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

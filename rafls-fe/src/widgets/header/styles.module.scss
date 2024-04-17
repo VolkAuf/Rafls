@@ -1,0 +1,22 @@
+.searchItem {
+  display: flex;
+  gap: 14px;
+  text-decoration: none;
+  color: #FFFFFF;
+  padding: 10px 16px;
+
+  &:hover {
+    opacity: .7;
+  }
+
+  &__poster {
+    width: 32px;
+    height: 48px;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+}

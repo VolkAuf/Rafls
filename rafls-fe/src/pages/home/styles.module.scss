@@ -1,0 +1,29 @@
+.slide {
+  height: 994px;
+  padding: 0 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 60px;
+  position: relative;
+  background: #191919;
+
+  &__bg {
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    top: 0;
+    height: 101%;
+    width: 100%;
+    object-fit: none;
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+  padding: 70px 0;
+  background: #191919;
+}

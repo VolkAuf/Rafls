@@ -1,0 +1,26 @@
+.reviewWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 70px;
+  gap: 60px;
+}
+
+.review {
+  display: flex;
+  gap: 50px;
+  width: 100%;
+
+  &__rating {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  &__ratingItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+  }
+}

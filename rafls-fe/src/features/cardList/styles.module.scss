@@ -1,0 +1,40 @@
+.cardList {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+
+  &__title {
+    display: flex;
+    margin-left: 70px;
+    gap: 90px;
+    color: #FFFFFF;
+    align-items: flex-end;
+  }
+
+  &__viewAll {
+    display: flex;
+    gap: 26px;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 400;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .list {
+    display: flex;
+    gap: 26px;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0 70px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
