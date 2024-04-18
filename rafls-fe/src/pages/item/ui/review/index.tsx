@@ -23,50 +23,6 @@ export const Review: FC<ReviewProps> = ({text, criteria, dateCreated}) => {
         <div className={styles.review__rating}>
           <div className={styles.review__ratingItem}>
             <Typography variant="h5" color="white" fontWeight={500}>
-              Настроение при просмотре
-            </Typography>
-            <Rating
-              readOnly
-              name="moodWhen"
-              sx={{'.MuiRating-icon': {color: 'unset'}}}
-              value={criteria.moodWhen}
-            />
-          </div>
-          <div className={styles.review__ratingItem}>
-            <Typography variant="h5" color="white" fontWeight={500}>
-              Настроение после просмотра
-            </Typography>
-            <Rating
-              readOnly
-              name="moodAfter"
-              sx={{'.MuiRating-icon': {color: 'unset'}}}
-              value={criteria.moodAfter}
-            />
-          </div>
-          <div className={styles.review__ratingItem}>
-            <Typography variant="h5" color="white" fontWeight={500}>
-              Вероятность пересмотра
-            </Typography>
-            <Rating
-              readOnly
-              sx={{'.MuiRating-icon': {color: 'unset'}}}
-              name="rewatchValue"
-              value={criteria.rewatchValue}
-            />
-          </div>
-          <div className={styles.review__ratingItem}>
-            <Typography variant="h5" color="white" fontWeight={500}>
-              Общая оценка
-            </Typography>
-            <Rating
-              readOnly
-              name="generalRate"
-              sx={{'.MuiRating-icon': {color: 'unset'}}}
-              value={criteria.generalRate}
-            />
-          </div>
-          <div className={styles.review__ratingItem}>
-            <Typography variant="h5" color="white" fontWeight={500}>
               Актерская игра
             </Typography>
             <Rating
@@ -78,7 +34,7 @@ export const Review: FC<ReviewProps> = ({text, criteria, dateCreated}) => {
           </div>
           <div className={styles.review__ratingItem}>
             <Typography variant="h5" color="white" fontWeight={500}>
-              Спецэффекты
+              Визуал
             </Typography>
             <Rating
               readOnly
@@ -96,6 +52,28 @@ export const Review: FC<ReviewProps> = ({text, criteria, dateCreated}) => {
               name="scriptRate"
               sx={{'.MuiRating-icon': {color: 'unset'}}}
               value={criteria.scriptRate}
+            />
+          </div>
+          <div className={styles.review__ratingItem}>
+            <Typography variant="h5" color="white" fontWeight={500}>
+              Вероятность пересмотра
+            </Typography>
+            <Rating
+              readOnly
+              sx={{'.MuiRating-icon': {color: 'unset'}}}
+              name="rewatchValue"
+              value={criteria.rewatchValue}
+            />
+          </div>
+          <div className={styles.review__ratingItem}>
+            <Typography variant="h5" color="white" fontWeight={500}>
+              Общее впечатление
+            </Typography>
+            <Rating
+              readOnly
+              name="generalRate"
+              sx={{'.MuiRating-icon': {color: 'unset'}}}
+              value={criteria.generalRate}
             />
           </div>
           <div className={styles.review__ratingItem}>

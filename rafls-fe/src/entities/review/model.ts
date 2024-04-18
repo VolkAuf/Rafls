@@ -1,6 +1,4 @@
 export type ReviewCriteriaType = {
-  moodWhen: number
-  moodAfter: number
   rewatchValue: number
   generalRate: number
   actorRate: number

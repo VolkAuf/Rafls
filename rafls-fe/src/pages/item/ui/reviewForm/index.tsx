@@ -16,8 +16,6 @@ const Component = (_: unknown, ref: ForwardedRef<HTMLDivElement>) => {
     actorRate: 0,
     generalRate: 0,
     graphicsRate: 0,
-    moodAfter: 0,
-    moodWhen: 0,
     rewatchValue: 0,
     scriptRate: 0
   })
