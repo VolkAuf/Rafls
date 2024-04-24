@@ -2,7 +2,7 @@
   "name": "rafls-be",
   "version": "1.0.0",
   "description": "movie streaming platform",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "build": "npx tsc",
     "start": "node dist/index.js",

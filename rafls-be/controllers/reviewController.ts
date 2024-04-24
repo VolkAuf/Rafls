@@ -52,3 +52,29 @@ export const getReview = async (req: GetReviewRequest, res: Response) => {
 
   return res.status(200).json(review)
 }
+
+export const getReviews = async (res: Response) => {
+    const review = await Review.findAll()
+    return res.status(200).json(review)
+}
+
+export const getReviewsByMovieId = async (req: GetReviewRequest, res: Response) => {
+  const movieId = req.params.id
+
+  if (!movieId) return res.status(400).json({
+    status: 'failed',
+    code: '400',
+    message: 'No query params'
+  })
+
+  const reviews = await Review.findAll({where: {movieId: movieId}})
+
+  return res.status(200).json(reviews)
+}
+
+export const getReviewsByUserId = async (req: GetReviewRequest, res: Response) => {
+  const typedReq = req as UserRequest
+  const reviews = await Review.findAll({where: {userId: typedReq.user.id}})
+
+  return res.status(200).json(reviews)
+}

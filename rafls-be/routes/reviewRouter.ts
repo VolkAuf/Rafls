@@ -1,5 +1,5 @@
 import Router from "express"
-import {createReview, getReview} from "../controllers/reviewController"
+import {createReview, getReview, getReviews, getReviewsByMovieId, getReviewsByUserId} from "../controllers/reviewController"
 
 const router = Router()
 
@@ -37,16 +37,47 @@ const router = Router()
  */
 router.post('/create', createReview)
 
+
+
 /**
  * @openapi
- * /review/{movieId}:
+ * /review/all:
  *   get:
  *     tags: [Review]
- *     description: Get review by movie id
+ *     description: Get reviews
  *     responses:
  *       200:
- *         description: review
+ *         description: reviews
  */
-router.get('/:id', getReview)
+router.get('/all', getReviews)
+
+
+
+/**
+ * @openapi
+ * /review/all/byUId/{userId}:
+ *   get:
+ *     tags: [Review]
+ *     description: Get reviews by userId
+ *     responses:
+ *       200:
+ *         description: reviews
+ */
+router.get('/all/byUId/:id', getReviewsByUserId)
+
+
+
+/**
+ * @openapi
+ * /review/all/byMId/{movieId}:
+ *   get:
+ *     tags: [Review]
+ *     description: Get reviews by movieId
+ *     responses:
+ *       200:
+ *         description: reviews
+ */
+router.get('/all/byMId/:id', getReviewsByMovieId)
+
 
 export default router

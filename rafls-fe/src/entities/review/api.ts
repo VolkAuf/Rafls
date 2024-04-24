@@ -13,8 +13,8 @@ export const CreateReview = (body: CreateReviewProps): Promise<AxiosResponse<Rev
   axiosDefault.post('review/create', body)
 
 export const GetReview = (movieId?: number) => useQuery({
-  queryKey: ['getReview', movieId],
-  queryFn: () => axiosDefault.get(`review/${movieId}`)
+  queryKey: ['getReviews', movieId],
+  queryFn: () => axiosDefault.get(`review/all`)
     .then(({data}: AxiosResponse<ReviewType>) => data),
   refetchOnWindowFocus: false,
   retry: false

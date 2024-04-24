@@ -48,26 +48,6 @@ const Component = (_: unknown, ref: ForwardedRef<HTMLDivElement>) => {
         <div className={styles.review__rating}>
           <div className={styles.review__ratingItem}>
             <Typography variant="h5" color="white" fontWeight={500}>
-              Настроение при просмотре
-            </Typography>
-            <Rating
-              name="moodWhen"
-              onChange={onChangeCriteria}
-              sx={{'.MuiRating-icon': {color: 'unset'}}}
-            />
-          </div>
-          <div className={styles.review__ratingItem}>
-            <Typography variant="h5" color="white" fontWeight={500}>
-              Настроение после просмотра
-            </Typography>
-            <Rating
-              name="moodAfter"
-              onChange={onChangeCriteria}
-              sx={{'.MuiRating-icon': {color: 'unset'}}}
-            />
-          </div>
-          <div className={styles.review__ratingItem}>
-            <Typography variant="h5" color="white" fontWeight={500}>
               Вероятность пересмотра
             </Typography>
             <Rating
