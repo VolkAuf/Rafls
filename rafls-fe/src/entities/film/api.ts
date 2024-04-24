@@ -2,6 +2,8 @@ import {useQuery} from "@tanstack/react-query"
 import {axiosKP, axiosKPList} from "shared/lib/axios.ts"
 import {AxiosResponse} from "axios"
 import {MovieDocsResponseDtoV13, MovieDtoV13, ShortImage} from "@openmoviedb/kinopoiskdev_client"
+import {GetReview} from "entities/review/api"
+import {MovieInfo} from "shared/ui/card"
 
 export type MovieType = MovieDtoV13 & { lists: string[] }
 export type ListType = {
@@ -23,7 +25,14 @@ const staleTime = 1000 * 60 * 60 //1hr cache
 export const GetItemById = (id?: number) => useQuery({
   queryKey: ['getById', id],
   queryFn: () => axiosKP.get(`/${id}`)
-    .then(({data}: AxiosResponse<MovieType>) => data),
+    .then(({data}: AxiosResponse<MovieType>) => {
+      const review = GetReview(Number(id))
+      if (review.data?.criteria.generalRate)
+        {
+          return data, review.data?.criteria.generalRate
+        }
+      data
+    }),
   refetchOnWindowFocus: false,
   staleTime
 })
@@ -115,6 +124,7 @@ export const GetMoviesByLists = (category: 'Сериалы' | 'Фильмы') =>
           previousValue[list].push({
             id: currentValue.id,
             poster: currentValue.poster,
+            rate: currentValue
           })
         } else {
           previousValue[list] = [{id: currentValue.id, poster: currentValue.poster}]
@@ -122,7 +132,7 @@ export const GetMoviesByLists = (category: 'Сериалы' | 'Фильмы') =>
       }
 
       return previousValue
-    }, {} as Record<string, { id: number, poster: ShortImage | undefined }[]>)
+    }, {} as Record<string, { id: number, poster: ShortImage | undefined, rate: number }[]>)
 
     return ({list: formattedList, keys: objectList})
   },

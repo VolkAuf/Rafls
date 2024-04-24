@@ -1,13 +1,12 @@
 import {FC} from "react"
 import styles from './styles.module.scss'
 import Typography from "@mui/material/Typography"
-import {Card} from "shared/ui/card"
-import {MovieDtoV13} from "@openmoviedb/kinopoiskdev_client"
+import {Card, MovieInfo} from "shared/ui/card"
 
 type CardListProps = {
   title?: string
   to?: string
-  data?: MovieDtoV13[]
+  data?: MovieInfo[]
 }
 
 export const CardList: FC<CardListProps> = ({title, data}) => {
@@ -21,7 +20,7 @@ export const CardList: FC<CardListProps> = ({title, data}) => {
         </div>
         : null}
       <div className={styles.list}>
-        {data?.map((item) => (<Card key={item.id} {...item}/>))}
+        {data?.map((item) => (<Card key={item.kpInfo.id} {...item}/>))}
       </div>
     </div>
   )
