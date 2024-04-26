@@ -6,6 +6,8 @@
   position: relative;
   cursor: pointer;
   background-color: rgba(0, 0, 0, .5);
+  overflow: hidden;
+  text-decoration: none;
 
   &__img {
     object-fit: cover;
