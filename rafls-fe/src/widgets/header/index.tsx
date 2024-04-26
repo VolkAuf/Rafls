@@ -205,7 +205,7 @@ type SearchItemProps = {
   onClick: () => void
 }
 
-const SearchItem: FC<SearchItemProps> = ({id, name, poster, isSeries, rating, year, onClick}) => {
+const SearchItem: FC<SearchItemProps> = ({id, name, poster, isSeries, year, onClick}) => {
   return (
     <Link to={`${isSeries ? 'series' : 'films'}/${id}`} className={styles.searchItem} onClick={onClick}>
       {poster ?
@@ -215,14 +215,6 @@ const SearchItem: FC<SearchItemProps> = ({id, name, poster, isSeries, rating, ye
       <div className={styles.searchItem__wrapper}>
         <Typography fontWeight={900} variant="body1">{name}</Typography>
         <Box display="inline-flex" gap={1} alignItems="center">
-          {rating ? <Typography
-            fontWeight={800}
-            display="inline-block"
-            color={rating > 7 ? 'green' : rating > 5 ? 'orange' : 'red'}
-            variant="body2"
-          >
-            {rating?.toFixed(1)}
-          </Typography> : null}
           <Typography variant="body2">{isSeries ? 'сериал,' : ''} {year}</Typography>
         </Box>
       </div>

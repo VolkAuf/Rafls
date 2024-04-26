@@ -48,32 +48,12 @@ const Component = (_: unknown, ref: ForwardedRef<HTMLDivElement>) => {
         <div className={styles.review__rating}>
           <div className={styles.review__ratingItem}>
             <Typography variant="h5" color="white" fontWeight={500}>
-              Вероятность пересмотра
-            </Typography>
-            <Rating
-              sx={{'.MuiRating-icon': {color: 'unset'}}}
-              name="rewatchValue"
-              onChange={onChangeCriteria}
-            />
-          </div>
-          <div className={styles.review__ratingItem}>
-            <Typography variant="h5" color="white" fontWeight={500}>
-              Общая оценка
-            </Typography>
-            <Rating
-              name="generalRate"
-              onChange={onChangeCriteria}
-              sx={{'.MuiRating-icon': {color: 'unset'}}}
-            />
-          </div>
-          <div className={styles.review__ratingItem}>
-            <Typography variant="h5" color="white" fontWeight={500}>
               Актерская игра
             </Typography>
             <Rating
-              name="actorRate"
-              onChange={onChangeCriteria}
-              sx={{'.MuiRating-icon': {color: 'unset'}}}
+                name="actorRate"
+                onChange={onChangeCriteria}
+                sx={{'.MuiRating-icon': {color: 'unset'}}}
             />
           </div>
           <div className={styles.review__ratingItem}>
@@ -81,9 +61,9 @@ const Component = (_: unknown, ref: ForwardedRef<HTMLDivElement>) => {
               Спецэффекты
             </Typography>
             <Rating
-              name="graphicsRate"
-              onChange={onChangeCriteria}
-              sx={{'.MuiRating-icon': {color: 'unset'}}}
+                name="graphicsRate"
+                onChange={onChangeCriteria}
+                sx={{'.MuiRating-icon': {color: 'unset'}}}
             />
           </div>
           <div className={styles.review__ratingItem}>
@@ -91,31 +71,51 @@ const Component = (_: unknown, ref: ForwardedRef<HTMLDivElement>) => {
               Сюжет
             </Typography>
             <Rating
-              name="scriptRate"
-              onChange={onChangeCriteria}
-              sx={{'.MuiRating-icon': {color: 'unset'}}}
+                name="scriptRate"
+                onChange={onChangeCriteria}
+                sx={{'.MuiRating-icon': {color: 'unset'}}}
+            />
+          </div>
+          <div className={styles.review__ratingItem}>
+            <Typography variant="h5" color="white" fontWeight={500}>
+              Вероятность пересмотра
+            </Typography>
+            <Rating
+                sx={{'.MuiRating-icon': {color: 'unset'}}}
+                name="rewatchValue"
+                onChange={onChangeCriteria}
+            />
+          </div>
+          <div className={styles.review__ratingItem}>
+            <Typography variant="h5" color="white" fontWeight={500}>
+              Общая оценка
+            </Typography>
+            <Rating
+                name="generalRate"
+                onChange={onChangeCriteria}
+                sx={{'.MuiRating-icon': {color: 'unset'}}}
             />
           </div>
           <LoadingButton
-            sx={{borderRadius: '60px', p: '10px 34px'}}
-            loadingPosition="start"
-            color="warning"
-            variant="contained"
-            onClick={onSubmitHandler}
-            loading={isLoading}
+              sx={{borderRadius: '60px', p: '10px 34px'}}
+              loadingPosition="start"
+              color="warning"
+              variant="contained"
+              onClick={onSubmitHandler}
+              loading={isLoading}
           >
             Отправить отзыв
           </LoadingButton>
         </div>
         <TextField
-          label="Рецензия"
-          multiline
-          rows={22}
-          color="warning"
-          sx={{width: '65%', '.MuiOutlinedInput-input': {color: 'white'}}}
-          focused
-          value={text}
-          onChange={(e) => setText(e.target.value)}
+            label="Рецензия"
+            multiline
+            rows={22}
+            color="warning"
+            sx={{width: '65%', '.MuiOutlinedInput-input': {color: 'white'}}}
+            focused
+            value={text}
+            onChange={(e) => setText(e.target.value)}
         />
       </div>
     </div>

@@ -114,8 +114,7 @@ export const GetMoviesByLists = (category: 'Сериалы' | 'Фильмы') =>
         if (previousValue[list]) {
           previousValue[list].push({
             id: currentValue.id,
-            poster: currentValue.poster,
-            rate: currentValue
+            poster: currentValue.poster
           })
         } else {
           previousValue[list] = [{id: currentValue.id, poster: currentValue.poster}]
@@ -123,7 +122,7 @@ export const GetMoviesByLists = (category: 'Сериалы' | 'Фильмы') =>
       }
 
       return previousValue
-    }, {} as Record<string, { id: number, poster: ShortImage | undefined, rate: number }[]>)
+    }, {} as Record<string, { id: number, poster: ShortImage | undefined }[]>)
 
     return ({list: formattedList, keys: objectList})
   },

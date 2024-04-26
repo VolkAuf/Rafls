@@ -32,7 +32,6 @@ export const createReview = async (req: CreateReviewRequest, res: Response, next
     return next(ApiError.internal('Пользователь с таким id не найден'))
   }
 
-
   const review = await Review.create({text, criteria, movieId, userId})
 
   return res.status(200).json(review)

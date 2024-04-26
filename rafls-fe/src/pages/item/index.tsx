@@ -8,6 +8,7 @@ import {GetMovieById, GetSameListItems} from "entities/film/api"
 import {CardList} from "features/cardList"
 import {useIsAuthenticated} from "entities/user/model"
 import {ReviewForm} from "./ui/reviewForm"
+import {GetReviewsByMovieId} from "entities/review/api"
 
 export const ItemPage = () => {
   const {id} = useParams()
@@ -17,6 +18,7 @@ export const ItemPage = () => {
   const [isShowReview, setIsShowReview] = useState(false)
   const isAuthenticated = useIsAuthenticated()
   const {data} = GetMovieById(Number(id))
+  const review = GetReviewsByMovieId(Number(id)).data?.pop()
   const {data: sameList} = GetSameListItems(data?.lists)
 
   const isSeries = useMemo(() => pathname.split('/')[1] === 'series', [pathname])
