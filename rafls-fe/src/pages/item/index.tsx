@@ -4,12 +4,10 @@ import styles from './styles.module.scss'
 import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
 import {useEffect, useMemo, useRef, useState} from "react"
-import {GetItemById, GetSameListItems} from "entities/film/api"
+import {GetMovieById, GetSameListItems} from "entities/film/api"
 import {CardList} from "features/cardList"
 import {useIsAuthenticated} from "entities/user/model"
 import {ReviewForm} from "./ui/reviewForm"
-import {GetReview} from "entities/review/api"
-import {Review} from "./ui/review"
 
 export const ItemPage = () => {
   const {id} = useParams()
@@ -18,8 +16,7 @@ export const ItemPage = () => {
   const navigate = useNavigate()
   const [isShowReview, setIsShowReview] = useState(false)
   const isAuthenticated = useIsAuthenticated()
-  const {data} = GetItemById(Number(id))
-  const {data: review} = GetReview(Number(id))
+  const {data} = GetMovieById(Number(id))
   const {data: sameList} = GetSameListItems(data?.lists)
 
   const isSeries = useMemo(() => pathname.split('/')[1] === 'series', [pathname])
@@ -96,7 +93,6 @@ export const ItemPage = () => {
       <div className={styles.main}>
         <CardList data={sameList}/>
         {isShowReview && !review ? <ReviewForm ref={ref}/> : null}
-        {review ? <Review text={review.text} criteria={review.criteria} dateCreated={review.createdAt}/> : null}
       </div>
     </>
   )

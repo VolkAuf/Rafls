@@ -2,8 +2,6 @@ import {useQuery} from "@tanstack/react-query"
 import {axiosKP, axiosKPList} from "shared/lib/axios.ts"
 import {AxiosResponse} from "axios"
 import {MovieDocsResponseDtoV13, MovieDtoV13, ShortImage} from "@openmoviedb/kinopoiskdev_client"
-import {GetReview} from "entities/review/api"
-import {MovieInfo} from "shared/ui/card"
 
 export type MovieType = MovieDtoV13 & { lists: string[] }
 export type ListType = {
@@ -22,17 +20,10 @@ export type ListType = {
 
 const staleTime = 1000 * 60 * 60 //1hr cache
 
-export const GetItemById = (id?: number) => useQuery({
+export const GetMovieById = (id?: number) => useQuery({
   queryKey: ['getById', id],
   queryFn: () => axiosKP.get(`/${id}`)
-    .then(({data}: AxiosResponse<MovieType>) => {
-      const review = GetReview(Number(id))
-      if (review.data?.criteria.generalRate)
-        {
-          return data, review.data?.criteria.generalRate
-        }
-      data
-    }),
+    .then(({data}: AxiosResponse<MovieType>) => data),
   refetchOnWindowFocus: false,
   staleTime
 })

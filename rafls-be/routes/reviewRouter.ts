@@ -1,5 +1,5 @@
 import Router from "express"
-import {createReview, getReview, getReviews, getReviewsByMovieId, getReviewsByUserId} from "../controllers/reviewController"
+import {createReview, getReview, getAllReviews, getReviewsByMovieId, getReviewsByUserId} from "../controllers/reviewController"
 
 const router = Router()
 
@@ -49,7 +49,7 @@ router.post('/create', createReview)
  *       200:
  *         description: reviews
  */
-router.get('/all', getReviews)
+router.get('/all', getAllReviews)
 
 
 
@@ -63,7 +63,7 @@ router.get('/all', getReviews)
  *       200:
  *         description: reviews
  */
-router.get('/all/byUId/:id', getReviewsByUserId)
+router.get('/all/byUId', getReviewsByUserId)
 
 
 

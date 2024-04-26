@@ -53,7 +53,7 @@ export const getReview = async (req: GetReviewRequest, res: Response) => {
   return res.status(200).json(review)
 }
 
-export const getReviews = async (res: Response) => {
+export const getAllReviews = async (res: Response) => {
     const review = await Review.findAll()
     return res.status(200).json(review)
 }
@@ -67,7 +67,7 @@ export const getReviewsByMovieId = async (req: GetReviewRequest, res: Response) 
     message: 'No query params'
   })
 
-  const reviews = await Review.findAll({where: {movieId: movieId}})
+  const reviews = await Review.findAll({where: {movieId}})
 
   return res.status(200).json(reviews)
 }
@@ -78,3 +78,29 @@ export const getReviewsByUserId = async (req: GetReviewRequest, res: Response) =
 
   return res.status(200).json(reviews)
 }
+
+/*export const getReviewsByUserMovies = async (req: GetReviewRequest, res: Response) => {
+  const typedReq = req as UserRequest
+  const reviews = await Review.findAll({where: {userId: typedReq.user.id}})
+  let movieIds = reviews.map((value) => value.movieId)
+  let reviewsOtherUsers : ReviewModel[][]
+  for (let movieId of movieIds) {
+
+  }
+
+  for (let reviewsOtherUser of reviewsOtherUsers) {
+    await reviewsOtherUser
+  }
+  const allReviewsOtherUsers = reviewsOtherUsers.map(myFunction2)
+
+
+  return res.status(200).json(reviews)
+}
+
+async function myFunction1(value : number) {
+  return await Review.findAll({where: {movieId: value}})
+}
+
+async function myFunction2(value : ReviewModel) {
+  return await Review.findAll({where: {userId: value.userId}})
+}*/
