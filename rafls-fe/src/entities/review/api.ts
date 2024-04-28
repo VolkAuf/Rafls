@@ -2,6 +2,7 @@ import {axiosDefault} from "shared/lib/axios"
 import {AxiosResponse} from "axios"
 import {ReviewType} from "./model"
 import {useQuery} from "@tanstack/react-query"
+import {getUserLs} from "../user/user.ts";
 
 type CreateReviewProps = {
   movieId: number
@@ -39,7 +40,19 @@ export const GetReviewsByUnitId = () => useQuery({
 export const GetReviewsByMovieId = (movieId?: number) => useQuery({
   queryKey: ['getReviewsByMovieId', movieId],
   queryFn: () => axiosDefault.get(`review/all/byMId/${movieId}`)
-    .then(({data}: AxiosResponse<ReviewType[]>) => data),
+    .then(({data}: AxiosResponse<ReviewType[]>) => data.sort(Comparer)),
   refetchOnWindowFocus: false,
   retry: false
 })
+
+function Comparer(first : ReviewType, second : ReviewType)
+{
+  const userId = getUserLs()?.id
+  if (userId == first.userId)
+    return -1
+  if (userId == second.userId)
+    return 1
+  if (first.createdAt > second.createdAt)
+    return -1
+  return 1
+}

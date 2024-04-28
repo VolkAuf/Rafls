@@ -5,23 +5,25 @@ import {ReviewType} from "../../../entities/review/model.ts";
 import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
 import {GetUserName} from "../../../entities/user/api.ts";
+import {getUserLs} from "../../../entities/user/user.ts";
 
 export const ReviewCard: FC<ReviewType> = (data) => {
     const {data: name} = GetUserName(Number(data.userId))
+    const isSelfReview = getUserLs()?.id === data.userId
     return (
         <Link
-            className={styles.reviewWrapper}
+            className={`${styles.reviewWrapper} ${getColorClass(isSelfReview)}`}
             to={`/films`}
         >
                 <Typography
-                    variant="h5"
+                    variant="h4"
                     color="white"
                 >
                     {name}
                 </Typography>
-                <div className={styles.review}>
-                    <div className={styles.review__rating}>
-                        <div className={styles.review__ratingItem}>
+                <div className={styles.reviewCard}>
+                    <div className={styles.reviewCard__rating}>
+                        <div className={styles.reviewCard__ratingItem}>
                             <Typography variant="h5" color="white" fontWeight={500}>
                                 Актерская игра
                             </Typography>
@@ -32,7 +34,7 @@ export const ReviewCard: FC<ReviewType> = (data) => {
                                 value={data.criteria.actorRate}
                             />
                         </div>
-                        <div className={styles.review__ratingItem}>
+                        <div className={styles.reviewCard__ratingItem}>
                             <Typography variant="h5" color="white" fontWeight={500}>
                                 Визуал
                             </Typography>
@@ -43,7 +45,7 @@ export const ReviewCard: FC<ReviewType> = (data) => {
                                 value={data.criteria.graphicsRate}
                             />
                         </div>
-                        <div className={styles.review__ratingItem}>
+                        <div className={styles.reviewCard__ratingItem}>
                             <Typography variant="h5" color="white" fontWeight={500}>
                                 Сюжет
                             </Typography>
@@ -54,7 +56,7 @@ export const ReviewCard: FC<ReviewType> = (data) => {
                                 value={data.criteria.scriptRate}
                             />
                         </div>
-                        <div className={styles.review__ratingItem}>
+                        <div className={styles.reviewCard__ratingItem}>
                             <Typography variant="h5" color="white" fontWeight={500}>
                                 Вероятность пересмотра
                             </Typography>
@@ -65,7 +67,7 @@ export const ReviewCard: FC<ReviewType> = (data) => {
                                 value={data.criteria.rewatchValue}
                             />
                         </div>
-                        <div className={styles.review__ratingItem}>
+                        <div className={styles.reviewCard__ratingItem}>
                             <Typography variant="h5" color="white" fontWeight={500}>
                                 Общее впечатление
                             </Typography>
@@ -88,4 +90,8 @@ export const ReviewCard: FC<ReviewType> = (data) => {
                 </div>
         </Link>
     )
+
+    function getColorClass(isSelfReview: boolean | undefined) {
+        return isSelfReview ? styles.reviewCard__bg_self : styles.reviewCard__bg
+    }
 }
