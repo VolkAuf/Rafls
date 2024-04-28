@@ -37,20 +37,20 @@
     text-decoration: none;
   }
 
-  .rate-high {
-    color: green;
+  &__rate_high {
+    color: #00aa00;
   }
 
-  .rate-medium {
-    color: yellow;
+  &__rate_medium {
+    color: #bf6500;
   }
 
-  .rate-low {
-    color: red;
+  &__rate_low {
+    color: #681f12;
   }
 
-  .rate-none {
-    color: red;
+  &__rate_none {
+    color: black;
   }
 
   &:hover {

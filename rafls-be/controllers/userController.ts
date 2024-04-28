@@ -78,3 +78,8 @@ export const changeUser = async (req: UserAuthRequest, res: Response, next: Next
 
   return res.status(200).json(newUser)
 }
+
+export const getUserNameById = async (req: Request, res: Response) => {
+  const user = await User.findOne({where: {id: req.params.id}})
+  return res.status(200).json(user?.username)
+}

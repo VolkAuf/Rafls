@@ -29,18 +29,20 @@ export const Card: FC<MovieDtoV13> = (data) => {
                 >
                 </img>
                 <div
-                    className={`${styles.card__rate} ${getColorClass(avg)}`}
+                    className={styles.card__rate}
                 >
-                    {avg ? avg.toFixed(1) : "N/O"}
+                    <div className={`${getColorClass(avg)}`}>
+                        {avg ? avg.toFixed(1) : "N/O"}
+                    </div>
                 </div>
             </div>
         </Link>
     )
 
     function getColorClass(avg: number | undefined) {
-        if(!avg) return 'rate-none';
-        if (avg > 4) return 'rate-high';   // Зеленый
-        if (avg > 2) return 'rate-medium'; // Желтый
-        if (avg <= 2) return 'rate-low';   // Красный
+        if(!avg) return styles.card__rate_none;
+        if (avg > 4) return styles.card__rate_high;   // Зеленый
+        if (avg > 2) return styles.card__rate_medium; // Желтый
+        if (avg <= 2) return styles.card__rate_low;   // Красный
     }
 }

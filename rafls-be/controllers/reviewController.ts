@@ -57,7 +57,7 @@ export const getAllReviews = async (res: Response) => {
     return res.status(200).json(review)
 }
 
-export const getReviewsByMovieId = async (req: GetReviewRequest, res: Response) => {
+export const getReviewsByMovieId = async (req: Request, res: Response) => {
   const movieId = req.params.id
 
   if (!movieId) return res.status(400).json({

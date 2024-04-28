@@ -1,5 +1,5 @@
 import Router from 'express'
-import {registration, login, changeUser} from '../controllers/userController'
+import {registration, login, changeUser, getUserNameById} from '../controllers/userController'
 import authMiddleware from "../middleware/authMiddleware"
 
 const router = Router()
@@ -58,5 +58,17 @@ router.post('/registration', registration)
 router.post('/login', login)
 
 router.post('/change', authMiddleware, changeUser)
+
+/**
+ * @openapi
+ * /user/getUserNameById/{userId}:
+ *   get:
+ *     tags: [User]
+ *     description: Get user name by id
+ *     responses:
+ *       200:
+ *         description: userName
+ */
+router.get('/getUserNameById/:id', getUserNameById)
 
 export default router

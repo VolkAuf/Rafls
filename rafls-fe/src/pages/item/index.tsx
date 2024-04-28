@@ -9,6 +9,8 @@ import {CardList} from "features/cardList"
 import {useIsAuthenticated} from "entities/user/model"
 import {ReviewForm} from "./ui/reviewForm"
 import {GetReviewsByMovieId} from "entities/review/api"
+import {ReviewCardList} from "../../features/reviewCardList";
+import {getUserLs} from "../../entities/user/user.ts";
 
 export const ItemPage = () => {
   const {id} = useParams()
@@ -18,7 +20,9 @@ export const ItemPage = () => {
   const [isShowReview, setIsShowReview] = useState(false)
   const isAuthenticated = useIsAuthenticated()
   const {data} = GetMovieById(Number(id))
-  const review = GetReviewsByMovieId(Number(id)).data?.pop()
+  const {data: reviews} = GetReviewsByMovieId(Number(id))
+  const userId = getUserLs()?.id
+  const review = reviews?.find(value => value.userId == userId)
   const {data: sameList} = GetSameListItems(data?.lists)
 
   const isSeries = useMemo(() => pathname.split('/')[1] === 'series', [pathname])
@@ -95,6 +99,7 @@ export const ItemPage = () => {
       <div className={styles.main}>
         <CardList data={sameList}/>
         {isShowReview && !review ? <ReviewForm ref={ref}/> : null}
+        {reviews && reviews.length > 0 ? <ReviewCardList data={reviews}/> : null}
       </div>
     </>
   )

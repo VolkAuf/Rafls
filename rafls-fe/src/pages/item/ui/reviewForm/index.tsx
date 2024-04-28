@@ -110,12 +110,13 @@ const Component = (_: unknown, ref: ForwardedRef<HTMLDivElement>) => {
         <TextField
             label="Рецензия"
             multiline
-            rows={22}
+            rows={6}
             color="warning"
-            sx={{width: '65%', '.MuiOutlinedInput-input': {color: 'white'}}}
+            sx={{width: '45%', '.MuiOutlinedInput-input': {color: 'white'}}}
             focused
             value={text}
             onChange={(e) => setText(e.target.value)}
+            inputProps={{ maxLength: 255 }}
         />
       </div>
     </div>
