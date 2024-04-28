@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from "express"
 import {ApiError} from "../error/ApiError"
-import {Review, User} from "../models/models"
+import {Review, ReviewModel, User} from "../models/models"
 import {UserRequest} from "../middleware/authMiddleware"
 
 interface CreateReviewRequest extends Request {
@@ -71,35 +71,9 @@ export const getReviewsByMovieId = async (req: Request, res: Response) => {
   return res.status(200).json(reviews)
 }
 
-export const getReviewsByUserId = async (req: GetReviewRequest, res: Response) => {
-  const typedReq = req as UserRequest
-  const reviews = await Review.findAll({where: {userId: typedReq.user.id}})
+export const getReviewsByUserId = async (req: Request, res: Response) => {
+  const userId = req.params.userId
+  const reviews = await Review.findAll({where: {userId: userId}})
 
   return res.status(200).json(reviews)
 }
-
-/*export const getReviewsByUserMovies = async (req: GetReviewRequest, res: Response) => {
-  const typedReq = req as UserRequest
-  const reviews = await Review.findAll({where: {userId: typedReq.user.id}})
-  let movieIds = reviews.map((value) => value.movieId)
-  let reviewsOtherUsers : ReviewModel[][]
-  for (let movieId of movieIds) {
-
-  }
-
-  for (let reviewsOtherUser of reviewsOtherUsers) {
-    await reviewsOtherUser
-  }
-  const allReviewsOtherUsers = reviewsOtherUsers.map(myFunction2)
-
-
-  return res.status(200).json(reviews)
-}
-
-async function myFunction1(value : number) {
-  return await Review.findAll({where: {movieId: value}})
-}
-
-async function myFunction2(value : ReviewModel) {
-  return await Review.findAll({where: {userId: value.userId}})
-}*/

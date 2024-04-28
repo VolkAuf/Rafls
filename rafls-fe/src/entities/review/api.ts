@@ -29,9 +29,9 @@ export const GetAllReviews = () => useQuery({
   retry: false
 })
 
-export const GetReviewsByUnitId = () => useQuery({
-  queryKey: ['getReviewsByUnitId'],
-  queryFn: () => axiosDefault.get(`review/all/byUId/`)
+export const GetReviewsByUserId = (userId?: number) => useQuery({
+  queryKey: ['getReviewsByUserId', userId],
+  queryFn: () => axiosDefault.get(`review/all/byUId/${userId}`)
     .then(({data}: AxiosResponse<ReviewType[]>) => data),
   refetchOnWindowFocus: false,
   retry: false
