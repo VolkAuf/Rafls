@@ -3,27 +3,28 @@ import {GetAllReviews, GetReviewsByUserId} from "./api.ts";
 
 export const getRecommendations = (userId: number) => {
     const {data: reviews} = GetAllReviews();
-    if(!reviews)
+    if (!reviews)
         return
 
     const similarities = getSimilaritiesUsers(userId, reviews);
     if (!similarities)
-        return;
+        return
 
     const recommendedMovies: { [movieId: number]: number } = {}; // Объект для хранения рекомендаций
     for (const similarity of similarities) {
         const otherUserId = similarity.userId;
         const {data: otherUserReviews} = GetReviewsByUserId(otherUserId);
 
-        if(!otherUserReviews)
-            return
+        if (!otherUserReviews)
+            return ; // Переходим к следующему элементу в цикле, а не выходим из функции
 
         for (const review of otherUserReviews) {
             const movieId = review.movieId;
 
             // Проверяем, оценил ли пользователь этот фильм
-            if(reviews.find((value) => value.userId == userId && value.movieId == movieId)){
-                recommendedMovies[movieId] = recommendedMovies[movieId] ? recommendedMovies[movieId] + similarity.similarity : similarity.similarity;
+            if (!reviews.some(value => value.userId === userId && value.movieId === movieId)) {
+                // Если пользователь не оценивал этот фильм, суммируем сходство
+                recommendedMovies[movieId] = (recommendedMovies[movieId] || 0) + similarity.similarity;
             }
         }
     }
