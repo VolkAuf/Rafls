@@ -1,5 +1,12 @@
 import Router from "express"
-import {createReview, getReview, getAllReviews, getReviewsByMovieId, getReviewsByUserId} from "../controllers/reviewController"
+import {
+    createReview,
+    getReview,
+    getAllReviews,
+    getReviewsByMovieId,
+    getReviewsByUserId,
+    setReviewsByMovieId
+} from "../controllers/reviewController"
 
 const router = Router()
 
@@ -78,6 +85,19 @@ router.get('/all/byUId', getReviewsByUserId)
  *         description: reviews
  */
 router.get('/all/byMId/:id', getReviewsByMovieId)
+
+
+/**
+ * @openapi
+ * /review/all/byMId/{movieId},{rate}:
+ *   get:
+ *     tags: [Review]
+ *     description: Get reviews by movieId, and set rate from kp if reviews are empty
+ *     responses:
+ *       200:
+ *         description: reviews
+ */
+router.get('/all/setByMId/:id', setReviewsByMovieId)
 
 
 export default router

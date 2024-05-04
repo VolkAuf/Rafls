@@ -8,7 +8,7 @@ import {GetMovieById, GetSameListItems} from "entities/film/api"
 import {CardList} from "features/cardList"
 import {useIsAuthenticated} from "entities/user/model"
 import {ReviewForm} from "./ui/reviewForm"
-import {GetReviewsByMovieId} from "entities/review/api"
+import {SetReviewsByMovieId} from "entities/review/api"
 import {ReviewCardList} from "../../features/reviewCardList";
 import {getUserLs} from "../../entities/user/user.ts";
 
@@ -20,7 +20,8 @@ export const ItemPage = () => {
   const [isShowReview, setIsShowReview] = useState(false)
   const isAuthenticated = useIsAuthenticated()
   const {data} = GetMovieById(Number(id))
-  const {data: reviews} = GetReviewsByMovieId(Number(id))
+  const rating = data?.rating?.kp || data?.rating?.russianFilmCritics || data?.rating?.filmCritics || data?.rating?.imdb || data?.rating?.tmdb || 5
+  const {data: reviews} = SetReviewsByMovieId(Number(id), rating)
   const userId = getUserLs()?.id
   const review = reviews?.find(value => value.userId == userId)
   const {data: sameList} = GetSameListItems(data?.lists)

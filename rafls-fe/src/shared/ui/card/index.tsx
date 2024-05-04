@@ -2,10 +2,12 @@ import {FC} from "react"
 import styles from "./styles.module.scss"
 import {MovieDtoV13} from "@openmoviedb/kinopoiskdev_client"
 import {Link} from "react-router-dom"
-import {GetReviewsByMovieId} from "entities/review/api"
+import {SetReviewsByMovieId} from "entities/review/api"
 
 export const Card: FC<MovieDtoV13> = (data) => {
-    const {data: rev} = GetReviewsByMovieId(Number(data.id))
+    const rating = data.rating?.kp || data.rating?.russianFilmCritics || data.rating?.filmCritics || data.rating?.imdb || data.rating?.tmdb || 5
+    const {data: rev} = SetReviewsByMovieId(Number(data.id), rating)
+
     let avg
     if (rev && rev.length > 0)
     {

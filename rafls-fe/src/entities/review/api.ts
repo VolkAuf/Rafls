@@ -45,6 +45,14 @@ export const GetReviewsByMovieId = (movieId?: number) => useQuery({
   retry: false
 })
 
+export const SetReviewsByMovieId = (movieId?: number, rate?: number) => useQuery({
+  queryKey: ['setReviewsByMovieId', movieId, rate],
+  queryFn: () => axiosDefault.get(`review/all/setByMId/${movieId},${rate}`)
+      .then(({data}: AxiosResponse<ReviewType[]>) => data.sort(Comparer)),
+  refetchOnWindowFocus: false,
+  retry: false
+})
+
 function Comparer(first : ReviewType, second : ReviewType)
 {
   const userId = getUserLs()?.id
