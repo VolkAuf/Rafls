@@ -1,20 +1,26 @@
-import {FC} from "react"
+import {FC, useState} from "react"
 import styles from "./styles.module.scss"
-import {Link} from "react-router-dom"
 import {ReviewType} from "../../../entities/review/model.ts";
-import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
 import {GetUserName} from "../../../entities/user/api.ts";
 import {getUserLs} from "../../../entities/user/user.ts";
+import {NewModal} from "./reviewModal.tsx";
+import {Typography} from "@mui/material"
+
+
 
 export const ReviewCard: FC<ReviewType> = (data) => {
     const {data: name} = GetUserName(Number(data.userId))
     const isSelfReview = getUserLs()?.id === data.userId
+    const [isOpenModal, setIsOpenModal] = useState(false)
+
     return (
-        <Link
-            className={`${styles.reviewWrapper} ${getColorClass(isSelfReview)}`}
-            to={`/films`}
-        >
+        <div>
+            <NewModal isOpen={isOpenModal} onClose={() => setIsOpenModal(false)} text={data.text}/>
+            <button
+                className={`${getColorClass(isSelfReview)}`}
+                onClick={() => setIsOpenModal(true)}
+            >
                 <Typography
                     variant="h4"
                     color="white"
@@ -31,6 +37,8 @@ export const ReviewCard: FC<ReviewType> = (data) => {
                                 readOnly
                                 name="actorRate"
                                 sx={{'.MuiRating-icon': {color: 'unset'}}}
+                                max={10}
+                                precision={0.5}
                                 value={data.criteria.actorRate}
                             />
                         </div>
@@ -42,6 +50,8 @@ export const ReviewCard: FC<ReviewType> = (data) => {
                                 readOnly
                                 name="graphicsRate"
                                 sx={{'.MuiRating-icon': {color: 'unset'}}}
+                                max={10}
+                                precision={0.5}
                                 value={data.criteria.graphicsRate}
                             />
                         </div>
@@ -53,6 +63,8 @@ export const ReviewCard: FC<ReviewType> = (data) => {
                                 readOnly
                                 name="scriptRate"
                                 sx={{'.MuiRating-icon': {color: 'unset'}}}
+                                max={10}
+                                precision={0.5}
                                 value={data.criteria.scriptRate}
                             />
                         </div>
@@ -64,6 +76,8 @@ export const ReviewCard: FC<ReviewType> = (data) => {
                                 readOnly
                                 sx={{'.MuiRating-icon': {color: 'unset'}}}
                                 name="rewatchValue"
+                                max={10}
+                                precision={0.5}
                                 value={data.criteria.rewatchValue}
                             />
                         </div>
@@ -75,6 +89,8 @@ export const ReviewCard: FC<ReviewType> = (data) => {
                                 readOnly
                                 name="generalRate"
                                 sx={{'.MuiRating-icon': {color: 'unset'}}}
+                                max={10}
+                                precision={0.5}
                                 value={data.criteria.generalRate}
                             />
                         </div>
@@ -88,10 +104,11 @@ export const ReviewCard: FC<ReviewType> = (data) => {
                         </div>
                     </div>
                 </div>
-        </Link>
+            </button>
+        </div>
     )
 
     function getColorClass(isSelfReview: boolean | undefined) {
-        return isSelfReview ? styles.reviewCard__bg_self : styles.reviewCard__bg
+        return isSelfReview ? styles.reviewWrapper_self : styles.reviewWrapper
     }
 }

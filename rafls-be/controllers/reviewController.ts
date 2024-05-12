@@ -100,16 +100,16 @@ export const setReviewsByMovieId = async (req: Request, res: Response) => {
     message: 'No query params'
   })
 
-  const reviews = await Review.findAll({where: {userId: userId, movieId}})
+  const reviews = await Review.findAll({where: {movieId}})
 
-  if(reviews.length == 0)
+  if (!reviews.find(rec => rec.userId === userId))
   {
     const criteria: ReviewCriteriaType = ({
-      actorRate: rate/2,
-      generalRate: rate/2,
-      graphicsRate: rate/2,
-      rewatchValue: rate/2,
-      scriptRate: rate/2
+      actorRate: Math.random() * rate,
+      generalRate: Math.random() * rate,
+      graphicsRate: Math.random() * rate,
+      rewatchValue: Math.random() * rate,
+      scriptRate: Math.random() * rate,
     })
     const text = "kp rate"
     const review = await Review.create({text, criteria, movieId, userId})

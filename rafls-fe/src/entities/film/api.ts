@@ -46,9 +46,10 @@ export const GetPopularSeries = () => useQuery({
   queryFn: ({signal}) => axiosKP.get('', {
     params: {
       page: '1',
-      limit: '20',
+      limit: '250',
+      notNullFields: ['description', 'shortDescription', 'rating.kp', 'name', 'genres.name', 'poster.url', 'logo.url', 'backdrop.url'],
       type: 'tv-series',
-      lists: 'popular-series'
+      lists: 'popular-series',
     }, signal
   }).then(({data}: AxiosResponse<MovieDocsResponseDtoV13>) => data.docs),
   refetchOnWindowFocus: false,
@@ -60,7 +61,8 @@ export const GetNewMovies = () => useQuery({
   queryFn: ({signal}) => axiosKP.get('', {
     params: {
       page: '1',
-      limit: '20',
+      limit: '250',
+      notNullFields: ['description', 'shortDescription', 'rating.kp', 'name', 'genres.name', 'poster.url', 'logo.url', 'backdrop.url'],
       type: 'movie',
       year: '2024'
     }, signal
@@ -74,7 +76,8 @@ export const GetSameListItems = (lists?: string[]) => useQuery({
   queryFn: ({signal}) => axiosKP.get('', {
     params: {
       page: '1',
-      limit: '20',
+      limit: '250',
+      notNullFields: ['description', 'shortDescription', 'rating.kp', 'name', 'genres.name', 'poster.url', 'logo.url', 'backdrop.url'],
       lists: lists ? lists[1] || lists[0] : 'popular-films'
     }, signal
   }).then(({data}: AxiosResponse<MovieDocsResponseDtoV13>) => data.docs),
@@ -89,9 +92,10 @@ export const GetMoviesByLists = (category: 'Сериалы' | 'Фильмы') =>
     const {data: lists}: AxiosResponse<{ docs: ListType[] }> = await axiosKPList.get('', {
       params: {
         page: '1',
-        limit: '25',
+        limit: '250',
         category,
-        selectFields: ['name', 'slug']
+        selectFields: ['name', 'slug'],
+        moviesCount: '1-500'
       }, signal
     })
 
@@ -104,6 +108,7 @@ export const GetMoviesByLists = (category: 'Сериалы' | 'Фильмы') =>
       params: {
         page: '1',
         limit: '250',
+        notNullFields: ['description', 'shortDescription', 'rating.kp', 'name', 'genres.name', 'poster.url', 'logo.url', 'backdrop.url'],
         lists: Object.keys(objectList),
         selectFields: ['lists', 'id', 'poster']
       },

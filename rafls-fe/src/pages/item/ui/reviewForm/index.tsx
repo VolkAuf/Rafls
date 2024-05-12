@@ -54,6 +54,9 @@ const Component = (_: unknown, ref: ForwardedRef<HTMLDivElement>) => {
                 name="actorRate"
                 onChange={onChangeCriteria}
                 sx={{'.MuiRating-icon': {color: 'unset'}}}
+                max={10}
+                precision={0.5}
+                size={"large"}
             />
           </div>
           <div className={styles.review__ratingItem}>
@@ -64,6 +67,9 @@ const Component = (_: unknown, ref: ForwardedRef<HTMLDivElement>) => {
                 name="graphicsRate"
                 onChange={onChangeCriteria}
                 sx={{'.MuiRating-icon': {color: 'unset'}}}
+                max={10}
+                precision={0.5}
+                size={"large"}
             />
           </div>
           <div className={styles.review__ratingItem}>
@@ -74,6 +80,9 @@ const Component = (_: unknown, ref: ForwardedRef<HTMLDivElement>) => {
                 name="scriptRate"
                 onChange={onChangeCriteria}
                 sx={{'.MuiRating-icon': {color: 'unset'}}}
+                max={10}
+                precision={0.5}
+                size={"large"}
             />
           </div>
           <div className={styles.review__ratingItem}>
@@ -84,6 +93,9 @@ const Component = (_: unknown, ref: ForwardedRef<HTMLDivElement>) => {
                 sx={{'.MuiRating-icon': {color: 'unset'}}}
                 name="rewatchValue"
                 onChange={onChangeCriteria}
+                max={10}
+                precision={0.5}
+                size={"large"}
             />
           </div>
           <div className={styles.review__ratingItem}>
@@ -94,6 +106,9 @@ const Component = (_: unknown, ref: ForwardedRef<HTMLDivElement>) => {
                 name="generalRate"
                 onChange={onChangeCriteria}
                 sx={{'.MuiRating-icon': {color: 'unset'}}}
+                max={10}
+                precision={0.5}
+                size={"large"}
             />
           </div>
           <LoadingButton
