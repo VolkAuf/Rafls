@@ -85,6 +85,48 @@ export const GetSameListItems = (lists?: string[]) => useQuery({
   staleTime
 })
 
+export const GetSequelsMovies = (movie: MovieType) =>useQuery({
+  queryKey: ['getNewMovies', movie],
+  queryFn: ({signal}) => axiosKP.get('', {
+      params: {
+        page: '1',
+        limit: '250',
+        id: movie.sequelsAndPrequels?.map((value) => value.id),
+        notNullFields: ['description', 'shortDescription', 'rating.kp', 'name', 'genres.name', 'poster.url', 'logo.url', 'backdrop.url'],
+      }, signal
+    }).then(({data}: AxiosResponse<MovieDocsResponseDtoV13>) => data.docs),
+  refetchOnWindowFocus: false,
+  staleTime
+})
+
+export const GetSimilarMovies = (movie: MovieType) =>useQuery({
+  queryKey: ['getNewMovies', movie],
+  queryFn: ({signal}) => axiosKP.get('', {
+    params: {
+      page: '1',
+      limit: '250',
+      id: movie.similarMovies?.map((value) => value.id),
+      notNullFields: ['description', 'shortDescription', 'rating.kp', 'name', 'genres.name', 'poster.url', 'logo.url', 'backdrop.url'],
+    }, signal
+  }).then(({data}: AxiosResponse<MovieDocsResponseDtoV13>) => data.docs),
+  refetchOnWindowFocus: false,
+  staleTime
+})
+
+export const GetMoviesByIds = (ids: number[]) =>useQuery({
+  queryKey: ['getNewMovies', ids],
+  queryFn: ({signal}) => axiosKP.get('', {
+    params: {
+      page: '1',
+      limit: '250',
+      id: ids,
+      notNullFields: ['description', 'shortDescription', 'rating.kp', 'name', 'genres.name', 'poster.url', 'logo.url', 'backdrop.url'],
+    }, signal
+  }).then(({data}: AxiosResponse<MovieDocsResponseDtoV13>) => data.docs),
+  refetchOnWindowFocus: false,
+  staleTime
+})
+
 
 export const GetMoviesByLists = (category: 'Сериалы' | 'Фильмы') => useQuery({
   queryKey: ['moviesByLists', category],

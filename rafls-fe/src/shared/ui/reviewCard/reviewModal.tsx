@@ -39,11 +39,11 @@ export const NewModal: FC<ModalProps> = ({isOpen, onClose, text}) => {
             <Fade in={isOpen}>
                 <Box sx={style}>
                     <FormGroup
-                        sx={{display: 'flex', flexDirection: 'column', height: 350, flexWrap: 'nowrap'}}>
+                        sx={{display: 'flex', flexDirection: 'column', height: 350, width: 400, flexWrap: 'nowrap'}}>
                     <div>
                         <Typography variant="body1" sx={{height: 200}}>{text}</Typography>
                     </div>
-                    <Button onClick={onClose} alig variant="contained" color="warning">
+                    <Button onClick={onClose} variant="contained" color="warning" sx={{alignSelf: 'self-end'}}>
                         OK
                     </Button>
                 </FormGroup>

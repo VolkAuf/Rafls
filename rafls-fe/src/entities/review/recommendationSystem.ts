@@ -1,7 +1,7 @@
 import {ReviewCriteriaType, ReviewType} from "./model.ts";
 import {GetAllReviews, GetReviewsByUserId} from "./api.ts";
 
-export const getRecommendations = (userId: number) => {
+export const GetRecommendations = (userId: number) => {
     const {data: reviews} = GetAllReviews();
     if (!reviews)
         return

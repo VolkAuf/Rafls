@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from "express"
 import {ApiError} from "../error/ApiError"
-import {Review, ReviewModel, User} from "../models/models"
+import {Review, User} from "../models/models"
 import {UserRequest} from "../middleware/authMiddleware"
 
 interface CreateReviewRequest extends Request {
@@ -105,11 +105,11 @@ export const setReviewsByMovieId = async (req: Request, res: Response) => {
   if (!reviews.find(rec => rec.userId === userId))
   {
     const criteria: ReviewCriteriaType = ({
-      actorRate: Math.random() * rate,
-      generalRate: Math.random() * rate,
-      graphicsRate: Math.random() * rate,
-      rewatchValue: Math.random() * rate,
-      scriptRate: Math.random() * rate,
+      actorRate: rate,
+      graphicsRate: rate,
+      scriptRate: rate,
+      rewatchValue: rate,
+      generalRate: rate,
     })
     const text = "kp rate"
     const review = await Review.create({text, criteria, movieId, userId})
@@ -117,4 +117,10 @@ export const setReviewsByMovieId = async (req: Request, res: Response) => {
   }
 
   return res.status(200).json(reviews)
+}
+
+let getRateValue = (rate: number) => {
+  let randomMinus = Math.random() < 0.5
+  let randomValue = Math.random() * rate / 10
+  return Math.max(10, randomMinus ? rate - randomValue : rate + randomValue)
 }

@@ -4,13 +4,14 @@ import styles from './styles.module.scss'
 import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
 import {useEffect, useMemo, useRef, useState} from "react"
-import {GetMovieById, GetSameListItems} from "entities/film/api"
+import {GetMovieById, GetSameListItems, GetSequelsMovies, GetSimilarMovies} from "entities/film/api"
 import {CardList} from "features/cardList"
 import {useIsAuthenticated} from "entities/user/model"
 import {ReviewForm} from "./ui/reviewForm"
 import {SetReviewsByMovieId} from "entities/review/api"
 import {ReviewCardList} from "../../features/reviewCardList";
 import {getUserLs} from "../../entities/user/user.ts";
+// import {GetRecommendations} from "../../entities/review/recommendationSystem.ts";
 
 export const ItemPage = () => {
   const {id} = useParams()
@@ -25,6 +26,10 @@ export const ItemPage = () => {
   const userId = getUserLs()?.id
   const review = reviews?.find(value => value.userId == userId)
   const {data: sameList} = GetSameListItems(data?.lists)
+  const similarList= data?.similarMovies ? GetSimilarMovies(data) : undefined
+  const sequelsList= data?.sequelsAndPrequels ?  GetSequelsMovies(data) : undefined
+/*  const recSys = GetRecommendations(Number(id))
+  const recSysList= recSys ?  GetMoviesByIds(recSys) : undefined*/
 
   const isSeries = useMemo(() => pathname.split('/')[1] === 'series', [pathname])
 
@@ -99,6 +104,8 @@ export const ItemPage = () => {
       </div>
       <div className={styles.main}>
         <CardList data={sameList}/>
+        {similarList ? <CardList data={similarList?.data}/> : null}
+        {sequelsList ? <CardList data={sequelsList?.data}/> : null}
         {isShowReview && !review ? <ReviewForm ref={ref}/> : null}
         {reviews && reviews.length > 0 ? <ReviewCardList data={reviews}/> : null}
       </div>
