@@ -60,7 +60,7 @@ export const getReview = async (req: GetReviewRequest, res: Response) => {
   return res.status(200).json(review)
 }
 
-export const getAllReviews = async (res: Response) => {
+export const getAllReviews = async (req: Request, res: Response) => {
     const review = await Review.findAll()
     return res.status(200).json(review)
 }

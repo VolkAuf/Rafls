@@ -4,32 +4,71 @@ import styles from './styles.module.scss'
 import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
 import {useEffect, useMemo, useRef, useState} from "react"
-import {GetMovieById, GetSameListItems, GetSequelsMovies, GetSimilarMovies} from "entities/film/api"
+import {  GetMovieById,  GetMoviesByIds, GetSameListItems, GetSequelsMovies, GetSimilarMovies
+} from "entities/film/api"
 import {CardList} from "features/cardList"
 import {useIsAuthenticated} from "entities/user/model"
 import {ReviewForm} from "./ui/reviewForm"
-import {SetReviewsByMovieId} from "entities/review/api"
+import {GetReviewsByMovieId} from "entities/review/api"
 import {ReviewCardList} from "../../features/reviewCardList";
 import {getUserLs} from "../../entities/user/user.ts";
-// import {GetRecommendations} from "../../entities/review/recommendationSystem.ts";
+import {  GetRecommendations} from "../../entities/review/recommendationSystem.ts";
+import {MovieDtoV13} from "@openmoviedb/kinopoiskdev_client";
+
+
+function shuffle(array : MovieDtoV13[]) {
+  let currentIndex = array.length;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+
+    // Pick a remaining element...
+    const randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+}
 
 export const ItemPage = () => {
-  const {id} = useParams()
   const ref = useRef<HTMLDivElement>(null)
+  const {id} = useParams()
   const {pathname} = useLocation()
   const navigate = useNavigate()
   const [isShowReview, setIsShowReview] = useState(false)
   const isAuthenticated = useIsAuthenticated()
   const {data} = GetMovieById(Number(id))
-  const rating = data?.rating?.kp || data?.rating?.russianFilmCritics || data?.rating?.filmCritics || data?.rating?.imdb || data?.rating?.tmdb || 5
-  const {data: reviews} = SetReviewsByMovieId(Number(id), rating)
+  const {data: reviews} = GetReviewsByMovieId(Number(id))
   const userId = getUserLs()?.id
   const review = reviews?.find(value => value.userId == userId)
   const {data: sameList} = GetSameListItems(data?.lists)
-  const similarList= data?.similarMovies ? GetSimilarMovies(data) : undefined
-  const sequelsList= data?.sequelsAndPrequels ?  GetSequelsMovies(data) : undefined
-/*  const recSys = GetRecommendations(Number(id))
-  const recSysList= recSys ?  GetMoviesByIds(recSys) : undefined*/
+
+  const idsSimilar : number[] = []
+  data?.similarMovies?.forEach(value => { if (value.id) idsSimilar.push(Number(value.id)) })
+  const {data: similarList} = GetSimilarMovies(idsSimilar)
+
+  const idsSequels : number[] = []
+  data?.sequelsAndPrequels?.forEach(value => { if (value.id) idsSequels.push(Number(value.id)) })
+  const {data: sequelsList} = GetSequelsMovies(idsSequels)
+
+  const recSys = GetRecommendations(userId)
+  let recSysL : MovieDtoV13[] = []
+  const {data: recSysList} = GetMoviesByIds(recSys)
+  if (recSysList && recSysList.length)
+    recSysL = recSysList
+  shuffle(recSysL)
+
+/*  const recSysByScript = GetRecommendationsByCriteria(CriteriaType.scriptRate, userId)
+  let recSysLByScript : MovieDtoV13[] = []
+  const {data: recSysListByScript} = GetMoviesByIdsRecScript(recSysByScript)
+  if (recSysListByScript && recSysListByScript.length)
+    recSysLByScript = recSysListByScript
+  console.log("syslbyScr ", recSysLByScript)
+  shuffle(recSysLByScript)
+  console.log("syslbyScr shafl ", recSysLByScript)
+  console.log("sysl after ", recSysL)*/
 
   const isSeries = useMemo(() => pathname.split('/')[1] === 'series', [pathname])
 
@@ -104,8 +143,9 @@ export const ItemPage = () => {
       </div>
       <div className={styles.main}>
         <CardList data={sameList}/>
-        {similarList ? <CardList data={similarList?.data}/> : null}
-        {sequelsList ? <CardList data={sequelsList?.data}/> : null}
+        {similarList && similarList.length ? <CardList data={similarList}/> : null}
+        {sequelsList && sequelsList.length ? <CardList data={sequelsList}/> : null}
+        {recSysL && recSysL.length ? <CardList data={recSysL}/> : null}
         {isShowReview && !review ? <ReviewForm ref={ref}/> : null}
         {reviews && reviews.length > 0 ? <ReviewCardList data={reviews}/> : null}
       </div>

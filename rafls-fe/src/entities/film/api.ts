@@ -2,6 +2,7 @@ import {useQuery} from "@tanstack/react-query"
 import {axiosKP, axiosKPList} from "shared/lib/axios.ts"
 import {AxiosResponse} from "axios"
 import {MovieDocsResponseDtoV13, MovieDtoV13, ShortImage} from "@openmoviedb/kinopoiskdev_client"
+// import {SetReviewsByMovieId} from "../review/api.ts";
 
 export type MovieType = MovieDtoV13 & { lists: string[] }
 export type ListType = {
@@ -21,9 +22,13 @@ export type ListType = {
 const staleTime = 1000 * 60 * 60 //1hr cache
 
 export const GetMovieById = (id?: number) => useQuery({
-  queryKey: ['getById', id],
-  queryFn: () => axiosKP.get(`/${id}`)
-    .then(({data}: AxiosResponse<MovieType>) => data),
+  queryKey: ['moviesByLists', id],
+  queryFn: async () => {
+    const {data}: AxiosResponse<MovieType> = await axiosKP.get(`/${id}`)
+    // const rating = data.docs?.rating?.kp || data.docs?.rating?.russianFilmCritics || data.docs?.rating?.filmCritics || data.docs?.rating?.imdb || data.docs?.rating?.tmdb || 5
+    // SetReviewsByMovieId(id, rating)
+    return data
+  },
   refetchOnWindowFocus: false,
   staleTime
 })
@@ -85,27 +90,13 @@ export const GetSameListItems = (lists?: string[]) => useQuery({
   staleTime
 })
 
-export const GetSequelsMovies = (movie: MovieType) =>useQuery({
-  queryKey: ['getNewMovies', movie],
-  queryFn: ({signal}) => axiosKP.get('', {
-      params: {
-        page: '1',
-        limit: '250',
-        id: movie.sequelsAndPrequels?.map((value) => value.id),
-        notNullFields: ['description', 'shortDescription', 'rating.kp', 'name', 'genres.name', 'poster.url', 'logo.url', 'backdrop.url'],
-      }, signal
-    }).then(({data}: AxiosResponse<MovieDocsResponseDtoV13>) => data.docs),
-  refetchOnWindowFocus: false,
-  staleTime
-})
-
-export const GetSimilarMovies = (movie: MovieType) =>useQuery({
-  queryKey: ['getNewMovies', movie],
+export const GetSequelsMovies = (ids? : number[]) => useQuery({
+  queryKey: ['getSequelsMovies', ids],
   queryFn: ({signal}) => axiosKP.get('', {
     params: {
       page: '1',
       limit: '250',
-      id: movie.similarMovies?.map((value) => value.id),
+      id: ids,
       notNullFields: ['description', 'shortDescription', 'rating.kp', 'name', 'genres.name', 'poster.url', 'logo.url', 'backdrop.url'],
     }, signal
   }).then(({data}: AxiosResponse<MovieDocsResponseDtoV13>) => data.docs),
@@ -113,8 +104,37 @@ export const GetSimilarMovies = (movie: MovieType) =>useQuery({
   staleTime
 })
 
-export const GetMoviesByIds = (ids: number[]) =>useQuery({
-  queryKey: ['getNewMovies', ids],
+export const GetSimilarMovies = (ids? : number[]) => useQuery({
+  queryKey: ['getSimilarMovies', ids],
+  queryFn: ({signal}) => axiosKP.get('', {
+    params: {
+      page: '1',
+      limit: '250',
+      id: ids,
+      notNullFields: ['description', 'shortDescription', 'rating.kp', 'name', 'genres.name', 'poster.url', 'logo.url', 'backdrop.url'],
+    }, signal
+  }).then(({data}: AxiosResponse<MovieDocsResponseDtoV13>) => data.docs),
+  refetchOnWindowFocus: false,
+  staleTime
+})
+
+
+export const GetMoviesByIds = (ids?: number[]) => useQuery({
+  queryKey: ['getMoviesByIds', ids],
+  queryFn: ({signal}) => axiosKP.get('', {
+    params: {
+      page: '1',
+      limit: '250',
+      id: ids,
+      notNullFields: ['description', 'shortDescription', 'rating.kp', 'name', 'genres.name', 'poster.url', 'logo.url', 'backdrop.url'],
+    }, signal
+  }).then(({data}: AxiosResponse<MovieDocsResponseDtoV13>) => data.docs),
+  refetchOnWindowFocus: false,
+  staleTime
+})
+
+export const GetMoviesByIdsRecScript = (ids?: number[]) => useQuery({
+  queryKey: ['getMoviesByIds', ids],
   queryFn: ({signal}) => axiosKP.get('', {
     params: {
       page: '1',

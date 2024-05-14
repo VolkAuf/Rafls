@@ -5,7 +5,7 @@ export const STAGE_API = 'http://localhost:8000/api'
 export const PROD_API = ''
 
 const KP_API = 'https://api.kinopoisk.dev/v1.4/'
-const KP_API_KEY = 'W4FYMM6-J6WM50W-P3QNTHP-DGCHTHS'
+const KP_API_KEY = 'HGTNGD2-RYQ4XFZ-P49V081-PC0TJHA' //'RDESBHX-06WM5Y1-PK30QQX-HMEKYKE' //'W4FYMM6-J6WM50W-P3QNTHP-DGCHTHS'
 
 export const axiosDefault = axios.create({baseURL: import.meta.env.DEV ? STAGE_API : PROD_API})
 
