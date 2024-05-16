@@ -142,10 +142,10 @@ export const ItemPage = () => {
         </Button>
       </div>
       <div className={styles.main}>
-        <CardList data={sameList}/>
-        {similarList && similarList.length ? <CardList data={similarList}/> : null}
-        {sequelsList && sequelsList.length ? <CardList data={sequelsList}/> : null}
-        {recSysL && recSysL.length ? <CardList data={recSysL}/> : null}
+        {similarList && similarList.length ? <CardList data={similarList} title={"Похожие"}/> : null}
+        {sequelsList && sequelsList.length && (!similarList || !similarList.length || JSON.stringify(similarList) !== JSON.stringify(sequelsList)) ? <CardList data={sequelsList} title={"Сиквелы/Приквелы"}/> : null}
+        {recSysL && recSysL.length ? <CardList data={recSysL} title={"Вам понравится"}/> : null}
+        <CardList data={sameList} title={"Популярное"}/>
         {isShowReview && !review ? <ReviewForm ref={ref}/> : null}
         {reviews && reviews.length > 0 ? <ReviewCardList data={reviews}/> : null}
       </div>
