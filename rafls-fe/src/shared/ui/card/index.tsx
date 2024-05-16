@@ -30,13 +30,11 @@ export const Card: FC<MovieDtoV13> = (data) => {
                     alt={data.name}
                 >
                 </img>
-                <div
-                    className={styles.card__rate}
-                >
-                    <div className={`${getColorClass(avg)}`}>
-                        {avg ? avg.toFixed(1) : "N/O"}
+                {avg ?
+                    <div className={styles.card__rate}>
+                        <div className={`${getColorClass(avg)}`}> {avg.toFixed(1)} </div>
                     </div>
-                </div>
+                    : null}
             </div>
         </Link>
     )
