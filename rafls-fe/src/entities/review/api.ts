@@ -11,11 +11,11 @@ type CreateReviewProps = {
 }
 
 export const CreateReview = (body: CreateReviewProps): Promise<AxiosResponse<ReviewType>> =>
-  axiosDefault.post('review/create', body)
+  axiosDefault.post('createReview/create', body)
 
 export const GetReviews = (movieId?: number) => useQuery({
   queryKey: ['getReviews', movieId],
-  queryFn: () => axiosDefault.get(`review/all`)
+  queryFn: () => axiosDefault.get(`getReview/all`)
     .then(({data: list}: AxiosResponse<ReviewType[]>) => list),
   refetchOnWindowFocus: false,
   retry: false
@@ -23,7 +23,7 @@ export const GetReviews = (movieId?: number) => useQuery({
 
 export const GetAllReviews = () => useQuery({
   queryKey: ['getAllReviews'],
-  queryFn: () => axiosDefault.get(`review/all`)
+  queryFn: () => axiosDefault.get(`getReview/all`)
     .then(({data}: AxiosResponse<ReviewType[]>) => data),
   refetchOnWindowFocus: false,
   retry: false
@@ -31,7 +31,7 @@ export const GetAllReviews = () => useQuery({
 
 export const GetReviewsByUserId = (userId?: number) => useQuery({
   queryKey: ['getReviewsByUserId', userId],
-  queryFn: () => axiosDefault.get(`review/all/byUId/${userId}`)
+  queryFn: () => axiosDefault.get(`getReview/all/byUId/${userId}`)
     .then(({data}: AxiosResponse<ReviewType[]>) => data),
   refetchOnWindowFocus: false,
   retry: false
@@ -39,7 +39,7 @@ export const GetReviewsByUserId = (userId?: number) => useQuery({
 
 export const GetReviewsByMovieId = (movieId?: number) => useQuery({
   queryKey: ['getReviewsByMovieId', movieId],
-  queryFn: () => axiosDefault.get(`review/all/byMId/${movieId}`)
+  queryFn: () => axiosDefault.get(`getReview/all/byMId/${movieId}`)
     .then(({data}: AxiosResponse<ReviewType[]>) => data.sort(Comparer)),
   refetchOnWindowFocus: false,
   retry: false
@@ -47,7 +47,7 @@ export const GetReviewsByMovieId = (movieId?: number) => useQuery({
 
 export const SetReviewsByMovieId = (movieId?: number, rate?: number) => useQuery({
   queryKey: ['setReviewsByMovieId', movieId, rate],
-  queryFn: () => axiosDefault.get(`review/all/setByMId/${movieId},${rate}`)
+  queryFn: () => axiosDefault.get(`getReview/all/setByMId/${movieId},${rate}`)
       .then(({data}: AxiosResponse<ReviewType[]>) => data.sort(Comparer)),
   refetchOnWindowFocus: false,
   retry: false

@@ -1,54 +1,26 @@
 import Router from "express"
 import {
-    createReview,
     getReview,
     getAllReviews,
     getReviewsByMovieId,
     getReviewsByUserId,
     setReviewsByMovieId
-} from "../controllers/reviewController"
+} from "../controllers/getReviewController"
 
 const router = Router()
 
 /**
  * @openapi
  * tags:
- *  name: Review
+ *  name: GetReview
  *  description: The review managing API
  */
 
-/**
- * @openapi
- * /review/create:
- *   post:
- *     tags: [Review]
- *     description: Create review
- *     consumes:
- *          - json
- *     parameters:
- *          - in: number
- *            name: movieId
- *            type: number
- *            description: movie ID
- *          - in: string
- *            name: text
- *            type: string
- *            description: review text
- *          - in: json
- *            name: criteria
- *            type: object
- *            description: rating by criteria
- *     responses:
- *       200:
- *         description: review created
- */
-router.post('/create', createReview)
-
 
 
 /**
  * @openapi
- * /review/all:
+ * /getReview/all:
  *   get:
  *     tags: [Review]
  *     description: Get reviews
@@ -62,7 +34,7 @@ router.get('/all', getAllReviews)
 
 /**
  * @openapi
- * /review/all/byUId/{userId}:
+ * /getReview/all/byUId/{userId}:
  *   get:
  *     tags: [Review]
  *     description: Get reviews by userId
@@ -76,7 +48,7 @@ router.get('/all/byUId', getReviewsByUserId)
 
 /**
  * @openapi
- * /review/all/byMId/{movieId}:
+ * /getReview/all/byMId/{movieId}:
  *   get:
  *     tags: [Review]
  *     description: Get reviews by movieId
@@ -89,7 +61,7 @@ router.get('/all/byMId/:id', getReviewsByMovieId)
 
 /**
  * @openapi
- * /review/all/byMId/{movieId},{rate}:
+ * /getReview/all/byMId/{movieId},{rate}:
  *   get:
  *     tags: [Review]
  *     description: Get reviews by movieId, and set rate from kp if reviews are empty
