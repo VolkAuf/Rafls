@@ -60,16 +60,6 @@ export const ItemPage = () => {
     recSysL = recSysList
   shuffle(recSysL)
 
-/*  const recSysByScript = GetRecommendationsByCriteria(CriteriaType.scriptRate, userId)
-  let recSysLByScript : MovieDtoV13[] = []
-  const {data: recSysListByScript} = GetMoviesByIdsRecScript(recSysByScript)
-  if (recSysListByScript && recSysListByScript.length)
-    recSysLByScript = recSysListByScript
-  console.log("syslbyScr ", recSysLByScript)
-  shuffle(recSysLByScript)
-  console.log("syslbyScr shafl ", recSysLByScript)
-  console.log("sysl after ", recSysL)*/
-
   const isSeries = useMemo(() => pathname.split('/')[1] === 'series', [pathname])
 
   const getSeriesDuration = useMemo(() => {
