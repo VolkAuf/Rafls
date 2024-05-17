@@ -4,8 +4,7 @@ import styles from './styles.module.scss'
 import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
 import {useEffect, useMemo, useRef, useState} from "react"
-import {  GetMovieById,  GetMoviesByIds, GetSameListItems, GetSequelsMovies, GetSimilarMovies
-} from "entities/film/api"
+import {GetMovieById,  GetMoviesByIds, GetSameListItems, GetSequelsMovies, GetSimilarMovies} from "entities/film/api"
 import {CardList} from "features/cardList"
 import {useIsAuthenticated} from "entities/user/model"
 import {ReviewForm} from "./ui/reviewForm"
@@ -33,8 +32,8 @@ function shuffle(array : MovieDtoV13[]) {
 }
 
 export const ItemPage = () => {
-  const ref = useRef<HTMLDivElement>(null)
   const {id} = useParams()
+  const ref = useRef<HTMLDivElement>(null)
   const {pathname} = useLocation()
   const navigate = useNavigate()
   const [isShowReview, setIsShowReview] = useState(false)
@@ -44,21 +43,6 @@ export const ItemPage = () => {
   const userId = getUserLs()?.id
   const review = reviews?.find(value => value.userId == userId)
   const {data: sameList} = GetSameListItems(data?.lists)
-
-  const idsSimilar : number[] = []
-  data?.similarMovies?.forEach(value => { if (value.id) idsSimilar.push(Number(value.id)) })
-  const {data: similarList} = GetSimilarMovies(idsSimilar)
-
-  const idsSequels : number[] = []
-  data?.sequelsAndPrequels?.forEach(value => { if (value.id) idsSequels.push(Number(value.id)) })
-  const {data: sequelsList} = GetSequelsMovies(idsSequels)
-
-  const recSys = GetRecommendations(userId)
-  let recSysL : MovieDtoV13[] = []
-  const {data: recSysList} = GetMoviesByIds(recSys)
-  if (recSysList && recSysList.length)
-    recSysL = recSysList
-  shuffle(recSysL)
 
   const isSeries = useMemo(() => pathname.split('/')[1] === 'series', [pathname])
 
@@ -91,6 +75,22 @@ export const ItemPage = () => {
 
     setIsShowReview(false)
   }, [review])
+
+  
+  const idsSimilar : number[] = []
+  data?.similarMovies?.forEach(value => { if (value.id) idsSimilar.push(Number(value.id)) })
+  const {data: similarList} = GetSimilarMovies(idsSimilar)
+
+  const idsSequels : number[] = []
+  data?.sequelsAndPrequels?.forEach(value => { if (value.id) idsSequels.push(Number(value.id)) })
+  const {data: sequelsList} = GetSequelsMovies(idsSequels)
+
+  const recSys = GetRecommendations(userId)
+  let recSysL : MovieDtoV13[] = []
+  const {data: recSysList} = GetMoviesByIds(recSys)
+  if (recSysList && recSysList.length)
+    recSysL = recSysList
+  shuffle(recSysL)
 
   if (!data) return <></>
 

@@ -10,10 +10,10 @@ export enum CriteriaType {
 }
 
 export const GetRecommendations = (userId?: number) => {
-    if (!userId)
-        return
     const {data: reviews} = GetAllReviews();
     if (!reviews)
+        return
+    if (!userId)
         return
 
     const similarities = getSimilaritiesUsers(userId, reviews);
@@ -21,10 +21,10 @@ export const GetRecommendations = (userId?: number) => {
 }
 
 export const GetRecommendationsByCriteria = (criteriaType: CriteriaType, userId?: number) => {
-    if (!userId)
-        return
     const {data: reviews} = GetAllReviews();
     if (!reviews)
+        return
+    if (!userId)
         return
 
     const similarities = getSimilaritiesUsersByCriteria(userId, reviews, criteriaType);
