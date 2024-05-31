@@ -8,8 +8,13 @@ import {NewModal} from "./reviewModal.tsx";
 import {Typography} from "@mui/material"
 
 
+type ReviewCardProps = {
+    data: ReviewType,
+    needMovieName: boolean
+}
 
-export const ReviewCard: FC<ReviewType> = (data) => {
+
+export const ReviewCard: FC<ReviewCardProps> = ({data, needMovieName}) => {
     const {data: name} = GetUserName(Number(data.userId))
     const isSelfReview = getUserLs()?.id === data.userId
     const [isOpenModal, setIsOpenModal] = useState(false)
@@ -25,7 +30,7 @@ export const ReviewCard: FC<ReviewType> = (data) => {
                     variant="h4"
                     color="white"
                 >
-                    {name}
+                    {needMovieName? data.movieName : name}
                 </Typography>
                 <div className={styles.reviewCard}>
                     <div className={styles.reviewCard__rating}>

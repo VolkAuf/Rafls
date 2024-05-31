@@ -142,8 +142,8 @@ export const ItemPage = () => {
         {recSysL && recSysL.length ? <CardList data={recSysL} title={"Вам понравится"} /> : null}
         {idsRewatched && idsRewatched.length && rewatchedList && rewatchedList.length ? <CardList data={rewatchedList} title={"Ваши любимые"} /> : null}
         <CardList data={sameList} title={"Популярное"} />
-        {isShowReview && !review ? <ReviewForm ref={ref} /> : null}
-        {reviewsByMovie && reviewsByMovie.length > 0 ? <ReviewCardList data={reviewsByMovie} /> : null}
+        {isShowReview && !review && data?.name ? <ReviewForm movieName={data.name} ref={ref} /> : null}
+        {reviewsByMovie && reviewsByMovie.length > 0 ? <ReviewCardList data={reviewsByMovie} needMovieName={false} /> : null}
       </div>
     </>
   )

@@ -1,5 +1,5 @@
 import {useParams} from "react-router"
-import {ChangeEvent, ForwardedRef, forwardRef, MutableRefObject, SyntheticEvent, useState} from "react"
+import {ChangeEvent, FC, ForwardedRef, forwardRef, MutableRefObject, SyntheticEvent, useState} from "react"
 import {ReviewCriteriaType} from "entities/review/model.ts"
 import {CreateReview} from "entities/review/api.ts"
 import styles from "./styles.module.scss"
@@ -8,7 +8,12 @@ import Rating from "@mui/material/Rating"
 import TextField from "@mui/material/TextField"
 import LoadingButton from "@mui/lab/LoadingButton"
 
-const Component = (_: unknown, ref: ForwardedRef<HTMLDivElement>) => {
+
+type ReviewCardListProps = {
+  movieName: string,
+}
+
+export const ReviewForm: FC<ReviewCardListProps> = ({movieName}, ref: ForwardedRef<HTMLDivElement>) => {
   const {id} = useParams()
   const [isLoading, setIsLoading] = useState(false)
   const [text, setText] = useState('')
@@ -30,11 +35,10 @@ const Component = (_: unknown, ref: ForwardedRef<HTMLDivElement>) => {
     if (!id || !text.trim()) return
     setIsLoading(true)
 
-    CreateReview({movieId: Number(id), text: text.trim(), criteria})
+    CreateReview({movieName: movieName, movieId: Number(id), text: text.trim(), criteria})
       .catch(console.error)
       .finally(() => location.reload())
   }
-
 
   return (
     <div className={styles.reviewWrapper} ref={ref as unknown as MutableRefObject<HTMLDivElement>}>
@@ -137,5 +141,3 @@ const Component = (_: unknown, ref: ForwardedRef<HTMLDivElement>) => {
     </div>
   )
 }
-
-export const ReviewForm = forwardRef(Component)

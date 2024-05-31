@@ -5,6 +5,7 @@ import {useQuery} from "@tanstack/react-query"
 import {getUserLs} from "../user/user.ts";
 
 type CreateReviewProps = {
+  movieName: string
   movieId: number
   text: string
   criteria: object
@@ -45,9 +46,9 @@ export const GetReviewsByMovieId = (movieId?: number) => useQuery({
   retry: false
 })
 
-export const SetReviewsByMovieId = (movieId?: number, rate?: number) => useQuery({
-  queryKey: ['setReviewsByMovieId', movieId, rate],
-  queryFn: () => axiosDefault.get(`getReview/all/setByMId/${movieId},${rate}`)
+export const SetReviewsByMovieId = (moviewName?:string, movieId?: number, rate?: number) => useQuery({
+  queryKey: ['setReviewsByMovieId', moviewName, movieId, rate],
+  queryFn: () => axiosDefault.get(`getReview/all/setByMId/${moviewName}|${movieId}|${rate}`)
       .then(({data}: AxiosResponse<ReviewType[]>) => data.sort(Comparer)),
   refetchOnWindowFocus: false,
   retry: false

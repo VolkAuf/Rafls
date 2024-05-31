@@ -62,9 +62,10 @@ export const getReviewsByUserId = async (req: Request, res: Response) => {
 
 export const setReviewsByMovieId = async (req: Request, res: Response) => {
   const id = req.params.id
-  const s = id.split(',')
-  const movieId = Number.parseInt(s[0])
-  const rate = Number.parseInt(s[1])
+  const s = id.split('|')
+  const movieName = s[0]
+  const movieId = Number.parseInt(s[1])
+  const rate = Number.parseInt(s[2])
   const userId = 4
 
   if (!movieId) return res.status(400).json({
@@ -85,7 +86,7 @@ export const setReviewsByMovieId = async (req: Request, res: Response) => {
       generalRate: rate,
     })
     const text = "kp rate"
-    const review = await Review.create({text, criteria, movieId, userId})
+    const review = await Review.create({text, criteria, movieId, movieName, userId})
     reviews.push(review)
   }
 

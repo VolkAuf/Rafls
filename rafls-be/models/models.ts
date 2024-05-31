@@ -13,6 +13,7 @@ export interface ReviewModel extends Model<InferAttributes<ReviewModel>, InferCr
   text: string
   criteria: object
   movieId: number
+  movieName: string
   userId: number
 }
 
@@ -28,6 +29,7 @@ export const Review = sequelize.define<ReviewModel>('review', {
   text: {type: DataTypes.STRING},
   criteria: {type: DataTypes.JSON},
   movieId: {type: DataTypes.INTEGER},
+  movieName: {type: DataTypes.STRING},
   userId: {
     type: DataTypes.INTEGER, references: {
       model: User,

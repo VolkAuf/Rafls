@@ -5,10 +5,11 @@ import {ReviewType} from "../../entities/review/model.ts";
 import {ReviewCard} from "../../shared/ui/reviewCard";
 
 type ReviewCardListProps = {
-    data: ReviewType[]
+    data: ReviewType[],
+    needMovieName: boolean
 }
 
-export const ReviewCardList: FC<ReviewCardListProps> = ({data}) => {
+export const ReviewCardList: FC<ReviewCardListProps> = ({data, needMovieName}) => {
   return (
     <div className={styles.reviewCardList}>
         <div className={styles.reviewCardList__title}>
@@ -17,7 +18,7 @@ export const ReviewCardList: FC<ReviewCardListProps> = ({data}) => {
           </Typography>
         </div>
       <div className={styles.list}>
-        {data.map((item) => (<ReviewCard key={item.id} {...item}/>))}
+        {data.map((item) => (<ReviewCard key={item.id} data={item} needMovieName={needMovieName}/>))}
       </div>
     </div>
   )

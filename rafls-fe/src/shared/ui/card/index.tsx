@@ -6,7 +6,7 @@ import {SetReviewsByMovieId} from "entities/review/api"
 
 export const Card: FC<MovieDtoV13> = (data) => {
     const rating = data.rating?.kp || data.rating?.russianFilmCritics || data.rating?.filmCritics || data.rating?.imdb || data.rating?.tmdb || 5
-    const {data: rev} = SetReviewsByMovieId(Number(data.id), rating)
+    const {data: rev} = SetReviewsByMovieId(data.name, Number(data.id), rating)
 
     let avg
     if (rev && rev.length > 0)

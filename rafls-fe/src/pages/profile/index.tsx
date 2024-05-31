@@ -7,12 +7,15 @@ import {ChangeEvent, FormEvent, useState} from "react"
 import {ChangeUserData} from "entities/user/api.ts"
 import LoadingButton from "@mui/lab/LoadingButton"
 import {useDispatch} from "react-redux"
+import { ReviewCardList } from "features/reviewCardList"
+import { GetReviewsByUserId } from "entities/review/api"
 
 export const ProfilePage = () => {
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false)
   const user = useUser()
   const [fields, setFields] = useState({login: user.login, username: user.username})
+  const { data: reviewbyUser } = GetReviewsByUserId(user.id)
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (isLoading) return
@@ -89,6 +92,8 @@ export const ProfilePage = () => {
           Сохранить изменения
         </LoadingButton>
       </Box>
+      
+      {reviewbyUser && reviewbyUser.length > 0 ? <ReviewCardList data={reviewbyUser} needMovieName={true} /> : null}
     </Box>
   )
 }
