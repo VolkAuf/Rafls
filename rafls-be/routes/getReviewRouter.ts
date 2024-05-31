@@ -42,7 +42,7 @@ router.get('/all', getAllReviews)
  *       200:
  *         description: reviews
  */
-router.get('/all/byUId', getReviewsByUserId)
+router.get('/all/byUId/:id', getReviewsByUserId)
 
 
 

@@ -53,7 +53,7 @@ export const getReviewsByMovieId = async (req: Request, res: Response) => {
 }
 
 export const getReviewsByUserId = async (req: Request, res: Response) => {
-  const userId = req.params.userId
+  const userId = req.params.id
   const reviews = await Review.findAll({where: {userId: userId}})
 
   return res.status(200).json(reviews)

@@ -113,14 +113,15 @@ export const GetSimilarMovies = (ids? : number[]) => useQuery({
       id: ids,
       notNullFields: ['description', 'shortDescription', 'rating.kp', 'name', 'genres.name', 'poster.url', 'logo.url', 'backdrop.url'],
     }, signal
-  }).then(({data}: AxiosResponse<MovieDocsResponseDtoV13>) => data.docs),
+  })
+  .then(({data}: AxiosResponse<MovieDocsResponseDtoV13>) => data.docs),
   refetchOnWindowFocus: false,
   staleTime
 })
 
 
-export const GetMoviesByIds = (ids?: number[]) => useQuery({
-  queryKey: ['getMoviesByIds', ids],
+export const GetRecSysMoviesByIds = (ids?: number[]) => useQuery({
+  queryKey: ['getRecSysMoviesByIds', ids],
   queryFn: ({signal}) => axiosKP.get('', {
     params: {
       page: '1',
@@ -133,8 +134,8 @@ export const GetMoviesByIds = (ids?: number[]) => useQuery({
   staleTime
 })
 
-export const GetMoviesByIdsRecScript = (ids?: number[]) => useQuery({
-  queryKey: ['getMoviesByIds', ids],
+export const GetRewatchMoviesByIds = (ids?: number[]) => useQuery({
+  queryKey: ['getRewatchMoviesByIds', ids],
   queryFn: ({signal}) => axiosKP.get('', {
     params: {
       page: '1',

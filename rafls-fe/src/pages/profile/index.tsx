@@ -39,7 +39,7 @@ export const ProfilePage = () => {
       flexDirection="column"
       gap="30px"
       padding="70px"
-      height="70vh"
+      //height="70vh"
     >
       <Box display="flex" gap="20px" alignItems="center">
         <PersonIcon sx={{color: 'white'}} fontSize="large"/>
