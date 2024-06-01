@@ -137,9 +137,9 @@ export const ItemPage = () => {
         </Button>
       </div>
       <div className={styles.main}>
-        {similarList && similarList.length ? <CardList data={similarList} title={"Похожие"} /> : null}
+        {idsSimilar && idsSimilar.length && similarList && similarList.length ? <CardList data={similarList} title={"Похожие"} /> : null}
         {idsSequels && idsSequels.length && sequelsList && sequelsList.length && (!similarList || !similarList.length || JSON.stringify(similarList) !== JSON.stringify(sequelsList)) ? <CardList data={sequelsList} title={"Сиквелы/Приквелы"} /> : null}
-        {recSysL && recSysL.length ? <CardList data={recSysL} title={"Вам понравится"} /> : null}
+        {recSysIds && recSysIds.length && recSysL && recSysL.length ? <CardList data={recSysL} title={"Вам понравится"} /> : null}
         {idsRewatched && idsRewatched.length && rewatchedList && rewatchedList.length ? <CardList data={rewatchedList} title={"Ваши любимые"} /> : null}
         <CardList data={sameList} title={"Популярное"} />
         {isShowReview && !review && data?.name ? <ReviewForm movieName={data.name} ref={ref} /> : null}

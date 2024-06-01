@@ -21,7 +21,7 @@ export const ReviewCard: FC<ReviewCardProps> = ({data, needMovieName}) => {
 
     return (
         <div>
-            <NewModal isOpen={isOpenModal} onClose={() => setIsOpenModal(false)} text={data.text}/>
+            <NewModal isOpen={isOpenModal} onClose={() => setIsOpenModal(false)} text={data.text} label={needMovieName? data.movieName : name}/>
             <button
                 className={`${getColorClass(isSelfReview)}`}
                 onClick={() => setIsOpenModal(true)}
@@ -29,6 +29,10 @@ export const ReviewCard: FC<ReviewCardProps> = ({data, needMovieName}) => {
                 <Typography
                     variant="h4"
                     color="white"
+                    whiteSpace="nowrap"
+                    overflow="hidden"
+                    textOverflow="ellipsis"
+                    width="243px"
                 >
                     {needMovieName? data.movieName : name}
                 </Typography>

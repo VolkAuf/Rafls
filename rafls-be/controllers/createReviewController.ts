@@ -8,12 +8,13 @@ interface CreateReviewRequest extends Request {
     text: string
     criteria: object
     movieId: number
+    movieName: string
   }
 }
 
 export const createReview = async (req: CreateReviewRequest, res: Response, next: NextFunction) => {
   const typedReq = req as UserRequest
-  const {text, criteria, movieId} = req.body
+  const {text, criteria, movieId, movieName} = req.body
   const userId = typedReq.user.id
 
   if (!text || !criteria || !movieId) {
@@ -25,7 +26,7 @@ export const createReview = async (req: CreateReviewRequest, res: Response, next
     return next(ApiError.internal('Пользователь с таким id не найден'))
   }
 
-  const review = await Review.create({text, criteria, movieId, userId})
+  const review = await Review.create({text, criteria, movieId, movieName, userId})
 
   return res.status(200).json(review)
 }

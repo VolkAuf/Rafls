@@ -5,10 +5,10 @@ import {useQuery} from "@tanstack/react-query"
 import {getUserLs} from "../user/user.ts";
 
 type CreateReviewProps = {
-  movieName: string
-  movieId: number
   text: string
   criteria: object
+  movieId: number
+  movieName: string
 }
 
 export const CreateReview = (body: CreateReviewProps): Promise<AxiosResponse<ReviewType>> =>

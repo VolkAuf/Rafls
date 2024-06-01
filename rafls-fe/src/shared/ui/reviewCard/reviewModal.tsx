@@ -12,43 +12,49 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: 400,
     bgcolor: 'background.paper',
-    border: '2px solid #000',
+    borderRadius: 8,
     boxShadow: 24,
-    maxHeight: 600
-}
+    p: 4,
+    maxHeight: 600,
+    overflowY: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between'
+};
 
 type ModalProps = {
-    isOpen: boolean
-    onClose: () => void
-    text: string
-}
+    isOpen: boolean;
+    onClose: () => void;
+    label: string;
+    text: string;
+};
 
-export const NewModal: FC<ModalProps> = ({isOpen, onClose, text}) => {
+export const NewModal: FC<ModalProps> = ({ isOpen, onClose, label, text }) => {
     return (
         <Modal
             open={isOpen}
             onClose={onClose}
             closeAfterTransition
-            slots={{backdrop: Backdrop}}
+            slots={{ backdrop: Backdrop }}
             slotProps={{
                 backdrop: {
                     timeout: 500,
-                }
+                },
             }}
         >
             <Fade in={isOpen}>
                 <Box sx={style}>
-                    <FormGroup
-                        sx={{display: 'flex', flexDirection: 'column', height: 350, width: 400, flexWrap: 'nowrap'}}>
-                    <div>
-                        <Typography variant="body1" sx={{height: 200}}>{text}</Typography>
-                    </div>
-                    <Button onClick={onClose} variant="contained" color="warning" sx={{alignSelf: 'self-end'}}>
+                    <Box sx={{ mb: 2 }}>
+                        <Typography variant="h6" sx={{ wordWrap: 'break-word' }}>{label}</Typography>
+                    </Box>
+                    <Box sx={{ flexGrow: 1, mb: 2 }}>
+                        <Typography variant="body1">{text}</Typography>
+                    </Box>
+                    <Button onClick={onClose} variant="contained" color="primary" sx={{ alignSelf: 'center' }}>
                         OK
                     </Button>
-                </FormGroup>
                 </Box>
             </Fade>
         </Modal>
-    )
-}
+    );
+};

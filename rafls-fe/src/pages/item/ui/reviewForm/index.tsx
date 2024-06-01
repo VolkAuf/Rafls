@@ -1,5 +1,5 @@
 import {useParams} from "react-router"
-import {ChangeEvent, FC, ForwardedRef, forwardRef, MutableRefObject, SyntheticEvent, useState} from "react"
+import {ChangeEvent, Ref, forwardRef, MutableRefObject, SyntheticEvent, useState} from "react"
 import {ReviewCriteriaType} from "entities/review/model.ts"
 import {CreateReview} from "entities/review/api.ts"
 import styles from "./styles.module.scss"
@@ -9,11 +9,12 @@ import TextField from "@mui/material/TextField"
 import LoadingButton from "@mui/lab/LoadingButton"
 
 
-type ReviewCardListProps = {
+type ReviewFormProps = {
   movieName: string,
 }
 
-export const ReviewForm: FC<ReviewCardListProps> = ({movieName}, ref: ForwardedRef<HTMLDivElement>) => {
+
+export const ReviewForm = forwardRef<HTMLDivElement, ReviewFormProps>(({movieName}, ref: Ref<HTMLDivElement>) => {
   const {id} = useParams()
   const [isLoading, setIsLoading] = useState(false)
   const [text, setText] = useState('')
@@ -140,4 +141,4 @@ export const ReviewForm: FC<ReviewCardListProps> = ({movieName}, ref: ForwardedR
       </div>
     </div>
   )
-}
+})

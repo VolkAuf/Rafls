@@ -21,10 +21,6 @@ const router = Router()
  *     consumes:
  *          - json
  *     parameters:
- *          - in: number
- *            name: movieId
- *            type: number
- *            description: movie ID
  *          - in: string
  *            name: text
  *            type: string
@@ -33,6 +29,14 @@ const router = Router()
  *            name: criteria
  *            type: object
  *            description: rating by criteria
+ *          - in: number
+ *            name: movieId
+ *            type: number
+ *            description: movie ID
+ *          - in: string
+ *            name: movieName
+ *            type: string
+ *            description: movie name
  *     responses:
  *       200:
  *         description: review created
