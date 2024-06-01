@@ -7,22 +7,11 @@
     display: flex;
     margin-left: 70px;
     gap: 90px;
-    color: #FFFFFF;
-    align-items: flex-end;
-  }
-
-  &__viewAll {
-    display: flex;
-    gap: 26px;
+    color: #ffffff;
     align-items: center;
-    cursor: pointer;
-    font-size: 16px;
-    line-height: 18px;
-    font-weight: 400;
-
-    &:hover {
-      text-decoration: underline;
-    }
+    font-size: 24px;
+    font-weight: 500;
+    text-transform: uppercase;
   }
 
   .list {
@@ -31,10 +20,21 @@
     max-width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
-    padding: 0 70px;
+    padding: 0 20px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.5) rgba(0, 0, 0, 0);
 
     &::-webkit-scrollbar {
-      display: none;
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.5);
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: rgba(0, 0, 0, 0);
     }
   }
 }

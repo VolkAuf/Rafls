@@ -5,21 +5,26 @@
   border-radius: 4px;
   position: relative;
   cursor: pointer;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, 0.5);
   overflow: hidden;
   text-decoration: none;
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &__img_container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
 
   &__img {
     object-fit: cover;
     width: 100%;
     height: 100%;
     border-radius: 4px;
-  }
-
-  .__img_container {
-    position: relative;
-    width: 100%;
-    height: 100%;
   }
 
   &__rate {
@@ -32,9 +37,10 @@
     font-size: 32px;
     font-weight: 800;
     border-radius: 4px;
-    align-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    text-decoration: none;
   }
 
   &__rate_high {
@@ -51,9 +57,5 @@
 
   &__rate_none {
     color: black;
-  }
-
-  &:hover {
-    transform: scale(1.1)
   }
 }

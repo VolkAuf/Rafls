@@ -1,31 +1,40 @@
-import {useLocation, useNavigate} from "react-router"
-import styles from './styles.module.scss'
-import {Logo} from "shared/ui/logo"
-import {Box, Button, Typography} from "@mui/material"
-import {ChangeEvent, FC, FormEvent, InputHTMLAttributes, MutableRefObject, useEffect, useRef, useState} from "react"
-import {Link} from "react-router-dom"
-import {setAppUser, useIsAuthenticated} from "entities/user/model"
-import {useDispatch} from "react-redux"
-import {Login, RegisterUser} from "entities/user/api"
+import { useLocation, useNavigate } from "react-router";
+import styles from "./styles.module.scss";
+import { Logo } from "shared/ui/logo";
+import { Box, Button, Typography } from "@mui/material";
+import {
+  ChangeEvent,
+  FC,
+  FormEvent,
+  InputHTMLAttributes,
+  MutableRefObject,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { Link } from "react-router-dom";
+import { setAppUser, useIsAuthenticated } from "entities/user/model";
+import { useDispatch } from "react-redux";
+import { Login, RegisterUser } from "entities/user/api";
 
 export const AuthPage = () => {
-  const location = useLocation()
-  const navigate = useNavigate()
-  const isAuthenticated = useIsAuthenticated()
-  const formRef = useRef<HTMLFormElement | null>(null)
-  const isLogin = location.pathname === '/login'
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isAuthenticated = useIsAuthenticated();
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const isLogin = location.pathname === "/login";
 
   useEffect(() => {
-    isAuthenticated && navigate('/')
-  }, [isAuthenticated, navigate])
+    isAuthenticated && navigate("/");
+  }, [isAuthenticated, navigate]);
 
   const onSubmitHandler = (e: FormEvent) => {
-    e.preventDefault()
-  }
+    e.preventDefault();
+  };
 
   return (
     <Box className={styles.page}>
-      <Logo/>
+      <Logo />
       <Box
         ref={formRef}
         component="form"
@@ -37,39 +46,43 @@ export const AuthPage = () => {
         width="577px"
         alignItems="center"
         onSubmit={onSubmitHandler}
-        sx={{bgcolor: '#00000099'}}
+        sx={{ bgcolor: "#00000099" }}
       >
-        <Typography variant="h5" color="white" sx={{mb: '10px'}}>
-          {isLogin ? 'Войдите' : 'Зарегистрируйтесь'} чтобы начать
+        <Typography variant="h5" color="white" sx={{ mb: "10px" }}>
+          {isLogin ? "Войдите" : "Зарегистрируйтесь"} чтобы начать
         </Typography>
-        {isLogin ? <LoginContent formRef={formRef}/> : <RegisterContent formRef={formRef}/>}
+        {isLogin ? (
+          <LoginContent formRef={formRef} />
+        ) : (
+          <RegisterContent formRef={formRef} />
+        )}
       </Box>
       <Link to="/" className={styles.backHome}>
         Вернуться на сайт
       </Link>
     </Box>
-  )
-}
+  );
+};
 
 type LoginContentProps = {
-  formRef: MutableRefObject<HTMLFormElement | null>
-}
+  formRef: MutableRefObject<HTMLFormElement | null>;
+};
 
-const LoginContent: FC<LoginContentProps> = ({formRef}) => {
-  const dispatch = useDispatch()
-  const [fields, setFields] = useState({login: '', password: ''})
+const LoginContent: FC<LoginContentProps> = ({ formRef }) => {
+  const dispatch = useDispatch();
+  const [fields, setFields] = useState({ login: "", password: "" });
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setFields((prevState) => ({...prevState, [e.target.name]: e.target.value}))
-  }
+    setFields((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
+  };
 
   const onClickHandler = () => {
-    if (!formRef?.current?.checkValidity()) return
+    if (!formRef?.current?.checkValidity()) return;
 
-    Login({...fields})
-      .then(({data}) => setAppUser({...data, dispatch}))
-      .catch(console.error)
-  }
+    Login({ ...fields })
+      .then(({ data }) => setAppUser({ ...data, dispatch }))
+      .catch((error) => console.error(error.message));
+  };
 
   return (
     <>
@@ -92,7 +105,7 @@ const LoginContent: FC<LoginContentProps> = ({formRef}) => {
         placeholder="Пароль"
       />
       <Button
-        sx={{borderRadius: '60px', p: '10px 34px', mt: '25px'}}
+        sx={{ borderRadius: "60px", p: "10px 34px", mt: "25px" }}
         color="warning"
         type="submit"
         variant="contained"
@@ -101,33 +114,43 @@ const LoginContent: FC<LoginContentProps> = ({formRef}) => {
         Войти
       </Button>
       <div>
-        <Typography variant='caption' color='gray'>У вас нет учетной записи? </Typography>
+        <Typography variant="caption" color="gray">
+          У вас нет учетной записи?{" "}
+        </Typography>
         <Link className={styles.link} to="/register">
-          <Typography variant="caption" color="rgb(237, 108, 2)">Создать аккаунт</Typography>
+          <Typography variant="caption" color="rgb(237, 108, 2)">
+            Создать аккаунт
+          </Typography>
         </Link>
       </div>
     </>
-  )
-}
+  );
+};
 
-const RegisterContent: FC<LoginContentProps> = ({formRef}) => {
-  const dispatch = useDispatch()
-  const [fields, setFields] = useState({name: '', email: '', password: '', confirmPassword: ''})
+const RegisterContent: FC<LoginContentProps> = ({ formRef }) => {
+  const dispatch = useDispatch();
+  const [fields, setFields] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setFields((prevState) => ({...prevState, [e.target.name]: e.target.value}))
-  }
+    setFields((prevState) => ({ ...prevState, [e.target.name]: e.target.value }));
+  };
 
   const onClickHandler = () => {
-    if (!formRef?.current?.checkValidity()) return
+    if (!formRef?.current?.checkValidity()) return;
 
     RegisterUser({
       username: fields.name,
       login: fields.email,
-      password: fields.password
-    }).then(({data}) => setAppUser({...data, dispatch}))
-      .catch(console.error)
-  }
+      password: fields.password,
+    })
+      .then(({ data }) => setAppUser({ ...data, dispatch }))
+      .catch((error) => console.error(error.message));
+  };
 
   return (
     <>
@@ -173,7 +196,7 @@ const RegisterContent: FC<LoginContentProps> = ({formRef}) => {
         placeholder="Повторите пароль"
       />
       <Button
-        sx={{borderRadius: '60px', p: '10px 34px', mt: '25px'}}
+        sx={{ borderRadius: "60px", p: "10px 34px", mt: "25px" }}
         color="warning"
         variant="contained"
         type="submit"
@@ -182,14 +205,18 @@ const RegisterContent: FC<LoginContentProps> = ({formRef}) => {
         Регистрация
       </Button>
       <div>
-        <Typography variant="caption" color="gray">Уже зарегистрированы? </Typography>
+        <Typography variant="caption" color="gray">
+          Уже зарегистрированы?{" "}
+        </Typography>
         <Link className={styles.link} to="/login">
-          <Typography variant="caption" color="rgb(237, 108, 2)">Войти</Typography>
+          <Typography variant="caption" color="rgb(237, 108, 2)">
+            Войти
+          </Typography>
         </Link>
       </div>
     </>
-  )
-}
+  );
+};
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   fullWidth?: boolean

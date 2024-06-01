@@ -1,43 +1,35 @@
-import {ReviewCriteriaType, ReviewType} from "./model.ts";
-import {GetAllReviews} from "./api.ts";
+import { ReviewCriteriaType, ReviewType } from "./model.ts";
+import { GetAllReviews } from "./api.ts";
 
 export enum CriteriaType {
     rewatchValue = 1,
     generalRate = 2,
-    actorRate=3,
-    graphicsRate=4,
-    scriptRate=6,
+    actorRate = 3,
+    graphicsRate = 4,
+    scriptRate = 6,
 }
 
 export const GetRecommendations = (userId?: number) => {
-    const {data: reviews} = GetAllReviews();
-    if (!reviews)
-        return
-    if (!userId)
-        return
+    const { data: reviews } = GetAllReviews();
+    if (!reviews || !userId) return [];
 
     const similarities = getSimilaritiesUsers(userId, reviews);
-    return CalculateBySimilarities(reviews, userId, similarities)
+    return CalculateBySimilarities(reviews, userId, similarities);
 }
 
 export const GetRecommendationsByCriteria = (criteriaType: CriteriaType, userId?: number) => {
-    const {data: reviews} = GetAllReviews();
-    if (!reviews)
-        return
-    if (!userId)
-        return
+    const { data: reviews } = GetAllReviews();
+    if (!reviews || !userId) return [];
 
     const similarities = getSimilaritiesUsersByCriteria(userId, reviews, criteriaType);
-    return CalculateBySimilarities(reviews, userId, similarities)
+    return CalculateBySimilarities(reviews, userId, similarities);
 }
-
 
 export const getSimilaritiesUsers = (userId: number, reviews: ReviewType[]) => {
     const userReviews = reviews.filter(r => r.userId === userId);
     const otherUserReviews = reviews.filter(r => r.userId !== userId);
 
-    if (!userReviews || !userReviews.length)
-        return
+    if (!userReviews.length || !otherUserReviews.length) return [];
 
     const similarities = otherUserReviews.map(other => ({
         userId: other.userId,
@@ -48,7 +40,6 @@ export const getSimilaritiesUsers = (userId: number, reviews: ReviewType[]) => {
     similarities.sort((a, b) => b.similarity - a.similarity);
     return similarities.slice(0, 5); // Вернуть топ-5 похожих пользователей
 };
-
 
 export const distCosine = (userRatings: ReviewCriteriaType, otherUserRatings: ReviewCriteriaType): number => {
     let dotProduct = 0;
@@ -75,9 +66,8 @@ export const distCosine = (userRatings: ReviewCriteriaType, otherUserRatings: Re
     return dotProduct / (normUser1 * normUser2);
 }
 
-export const CalculateBySimilarities = (reviews: ReviewType[], userId: number, similarities?: {userId: number,similarity: number}[]) => {
-    if (!similarities)
-        return
+export const CalculateBySimilarities = (reviews: ReviewType[], userId: number, similarities?: { userId: number, similarity: number }[]) => {
+    if (!similarities) return [];
 
     const recommendedMovies: { [movieId: number]: number } = {}; // Объект для хранения рекомендаций
     for (const similarity of similarities) {
@@ -108,16 +98,14 @@ export const CalculateBySimilarities = (reviews: ReviewType[], userId: number, s
     return sortedMovies;
 }
 
-
 export const getSimilaritiesUsersByCriteria = (userId: number, reviews: ReviewType[], criteriaType: CriteriaType) => {
     const userReviews = reviews.filter(r => r.userId === userId);
     const otherUserReviews = reviews.filter(r => r.userId !== userId);
 
-    if (!userReviews || !userReviews.length)
-        return
+    if (!userReviews.length || !otherUserReviews.length) return [];
 
-    let similarities:  {userId: number, similarity: number}[] = []
-    switch (criteriaType){
+    let similarities: { userId: number, similarity: number }[] = [];
+    switch (criteriaType) {
         case CriteriaType.rewatchValue:
             similarities = otherUserReviews.map(other => ({
                 userId: other.userId,
