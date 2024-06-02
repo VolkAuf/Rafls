@@ -15,7 +15,7 @@ import { GetRecommendations } from "../../entities/review/recommendationSystem.t
 import { MovieDtoV13 } from "@openmoviedb/kinopoiskdev_client";
 
 
-function shuffle(array: MovieDtoV13[]) {
+export function shuffle(array: MovieDtoV13[]) {
   let currentIndex = array.length;
 
   // While there remain elements to shuffle...

@@ -1,11 +1,11 @@
 .slide {
-  height: 994px;
+  height: 100vh; // Сделаем секцию на весь экран
   padding: 0 70px;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Изменил на центрирование */
-  justify-content: center;
-  gap: 60px;
+  align-items: flex-start; // Выравнивание элементов по левому краю
+  justify-content: center; // Центрирование по вертикали
+  gap: 20px; // Уменьшил разрыв между элементами
   position: relative;
   background: #191919;
 
@@ -16,14 +16,15 @@
     top: 0;
     height: 100%;
     width: 100%;
-    object-fit: cover; /* Изменил на cover */
+    object-fit: cover; // Изменил на cover для более приятного отображения
+    opacity: 0.5; // Добавим немного прозрачности
   }
 }
 
 .main {
   display: flex;
   flex-direction: column;
-  gap: 100px;
-  padding: 70px 0;
+  gap: 50px; // Уменьшил разрыв между секциями
+  padding: 50px 0;
   background: #191919;
 }

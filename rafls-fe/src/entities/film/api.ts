@@ -66,7 +66,7 @@ export const GetNewMovies = () => useQuery({
       limit: '250',
       notNullFields: ['description', 'shortDescription', 'rating.kp', 'name', 'genres.name', 'poster.url', 'logo.url', 'backdrop.url'],
       type: 'movie',
-      year: '2024'
+      year: ['2023', '2024']
     }, signal
   }).then(({data}: AxiosResponse<MovieDocsResponseDtoV13>) => data.docs),
   refetchOnWindowFocus: false,
