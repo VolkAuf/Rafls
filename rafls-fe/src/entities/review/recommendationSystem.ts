@@ -33,7 +33,7 @@ export const getSimilaritiesUsers = (userId: number, reviews: ReviewType[]) => {
 
     const similarities = otherUserReviews.map(other => ({
         userId: other.userId,
-        similarity: distCosine(userReviews[0].criteria, other.criteria) // Сравнение только на основе одного обзора
+        similarity: distPirson(userReviews[0].criteria, other.criteria) // Сравнение только на основе одного обзора
     }));
 
     // Сортировка по сходству и возврат топ-N пользователей
@@ -41,7 +41,7 @@ export const getSimilaritiesUsers = (userId: number, reviews: ReviewType[]) => {
     return similarities.slice(0, 5); // Вернуть топ-5 похожих пользователей
 };
 
-export const distCosine = (userRatings: ReviewCriteriaType, otherUserRatings: ReviewCriteriaType): number => {
+export const distPirson = (userRatings: ReviewCriteriaType, otherUserRatings: ReviewCriteriaType): number => {
     let dotProduct = 0;
     let normUser1 = 0;
     let normUser2 = 0;

@@ -4,7 +4,7 @@ import styles from './styles.module.scss'
 import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
 import { useEffect, useMemo, useRef, useState } from "react"
-import { GetMovieById, GetRecSysMoviesByIds, GetRewatchMoviesByIds, GetSameListItems, GetSequelsMovies, GetSimilarMovies } from "entities/film/api"
+import { GetMovieById, GetNewMovies, GetPopularSeries, GetRecSysMoviesByIds, GetRewatchMoviesByIds, GetSameListItems, GetSequelsMovies, GetSimilarMovies } from "entities/film/api"
 import { CardList } from "features/cardList"
 import { useIsAuthenticated } from "entities/user/model"
 import { ReviewForm } from "./ui/reviewForm"
@@ -40,6 +40,8 @@ export const ItemPage = () => {
   const isAuthenticated = useIsAuthenticated()
   const { data } = GetMovieById(Number(id))
   const { data: reviewsByMovie } = GetReviewsByMovieId(Number(id))
+  const { data: popularSeries } = GetPopularSeries();
+  const { data: newMovies } = GetNewMovies();
   const userId = getUserLs()?.id
   const { data: reviewbyUser } = GetReviewsByUserId(userId)
   const review = reviewsByMovie?.find(value => value.userId == userId)
@@ -142,6 +144,8 @@ export const ItemPage = () => {
         {recSysIds && recSysIds.length && recSysL && recSysL.length ? <CardList data={recSysL} title={"Вам понравится"} /> : null}
         {idsRewatched && idsRewatched.length && rewatchedList && rewatchedList.length ? <CardList data={rewatchedList} title={"Ваши любимые"} /> : null}
         <CardList data={sameList} title={"Популярное"} />
+        <CardList data={newMovies} title="Новое кино" to="/films" />
+        <CardList data={popularSeries} title="Популярные сериалы" to="/series" />
         {isShowReview && !review && data?.name ? <ReviewForm movieName={data.name} ref={ref} /> : null}
         {reviewsByMovie && reviewsByMovie.length > 0 ? <ReviewCardList data={reviewsByMovie} needMovieName={false} /> : null}
       </div>
