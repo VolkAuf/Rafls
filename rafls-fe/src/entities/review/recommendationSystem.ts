@@ -9,6 +9,7 @@ export enum CriteriaType {
     scriptRate = 6,
 }
 
+// Функция для получения рекомендаций
 export const GetRecommendations = (userId?: number) => {
     const { data: reviews } = GetAllReviews();
     if (!reviews || !userId) return [];
@@ -17,36 +18,41 @@ export const GetRecommendations = (userId?: number) => {
     return CalculateBySimilarities(reviews, userId, similarities);
 }
 
-export const GetRecommendationsByCriteria = (criteriaType: CriteriaType, userId?: number) => {
-    const { data: reviews } = GetAllReviews();
-    if (!reviews || !userId) return [];
-
-    const similarities = getSimilaritiesUsersByCriteria(userId, reviews, criteriaType);
-    return CalculateBySimilarities(reviews, userId, similarities);
-}
-
+// Функция для получения сходств с другими пользователями
 export const getSimilaritiesUsers = (userId: number, reviews: ReviewType[]) => {
     const userReviews = reviews.filter(r => r.userId === userId);
     const otherUserReviews = reviews.filter(r => r.userId !== userId);
 
     if (!userReviews.length || !otherUserReviews.length) return [];
 
-    const similarities = otherUserReviews.map(other => ({
-        userId: other.userId,
-        similarity: distPirson(userReviews[0].criteria, other.criteria) // Сравнение только на основе одного обзора
-    }));
+    const sim: { [key: number]: number } = {}; // Словарь для хранения сходств
+
+    otherUserReviews.forEach(other => {
+        sim[other.userId] = 0; // Инициализация словаря
+    });
+
+    const similarities = otherUserReviews.map(other => {
+        const userReview = userReviews.find(value => value.movieId === other.movieId);
+        if (!userReview) return { userId: other.userId, similarity: 0 }; // Если нет совпадения по фильму, сходство 0
+
+        return {
+            userId: other.userId,
+            similarity: distСosinus(userReview.criteria, other.criteria)
+        };
+    });
 
     // Сортировка по сходству и возврат топ-N пользователей
     similarities.sort((a, b) => b.similarity - a.similarity);
     return similarities.slice(0, 5); // Вернуть топ-5 похожих пользователей
 };
 
-export const distPirson = (userRatings: ReviewCriteriaType, otherUserRatings: ReviewCriteriaType): number => {
+// Функция для вычисления косинусного сходства
+export const distСosinus = (userRatings: ReviewCriteriaType, otherUserRatings: ReviewCriteriaType): number => {
     let dotProduct = 0;
     let normUser1 = 0;
     let normUser2 = 0;
 
-    const keys = Object.keys(userRatings) as (keyof ReviewCriteriaType)[]; // Приводим тип ключей к типу ключей ReviewCriteriaType
+    const keys = Object.keys(userRatings) as (keyof ReviewCriteriaType)[];
 
     for (const key of keys) {
         if (otherUserRatings[key] !== undefined) {
@@ -66,16 +72,16 @@ export const distPirson = (userRatings: ReviewCriteriaType, otherUserRatings: Re
     return dotProduct / (normUser1 * normUser2);
 }
 
+// Функция для вычисления рекомендаций по сходствам
 export const CalculateBySimilarities = (reviews: ReviewType[], userId: number, similarities?: { userId: number, similarity: number }[]) => {
     if (!similarities) return [];
 
-    const recommendedMovies: { [movieId: number]: number } = {}; // Объект для хранения рекомендаций
+    const recommendedMovies: { [movieId: number]: number } = {};
     for (const similarity of similarities) {
         const otherUserId = similarity.userId;
         const otherUserReviews = reviews.filter(r => r.userId === otherUserId);
 
-        if (!otherUserReviews)
-            break ; // Переходим к следующему элементу в цикле, а не выходим из функции
+        if (!otherUserReviews.length) continue; // Переходим к следующему элементу в цикле
 
         for (const review of otherUserReviews) {
             const movieId = review.movieId;
@@ -94,8 +100,15 @@ export const CalculateBySimilarities = (reviews: ReviewType[], userId: number, s
         .map(([movieId, _]) => parseInt(movieId, 10))
         .slice(0, 50);
 
-
     return sortedMovies;
+}
+
+export const GetRecommendationsByCriteria = (criteriaType: CriteriaType, userId?: number) => {
+    const { data: reviews } = GetAllReviews();
+    if (!reviews || !userId) return [];
+
+    const similarities = getSimilaritiesUsersByCriteria(userId, reviews, criteriaType);
+    return CalculateBySimilarities(reviews, userId, similarities);
 }
 
 export const getSimilaritiesUsersByCriteria = (userId: number, reviews: ReviewType[], criteriaType: CriteriaType) => {
