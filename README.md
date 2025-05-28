@@ -12,3 +12,4 @@ Rafls — это веб-приложение для оценки контент�
 - **Frontend**: React, TypeScript
 - **Backend**: Node.js, TypeScript
 - **База данных**: PostgreSQL
+- **Внешнее Api**: KinopoiskApi
